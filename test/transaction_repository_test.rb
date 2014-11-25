@@ -7,7 +7,7 @@ class TransactionRepositoryTest < Minitest::Test
       id: '50',
       invoice_id: '50',
       credit_card_number: '4540842003561938',
-      credit_card_number: '2014-11-25',
+      credit_card_expiration_date: '2014-11-25',
       result: 'success',
       created_at: '2012-11-28',
       updated_at: '2014-10-15'

@@ -4,15 +4,22 @@ require 'csv'
 
 class TransactionTest < MiniTest::Test
   def test_it_has_attributes
-    file_path = File.expand_path('./fixtures/transaction_fixture.csv', __dir__)
-    csv = CSV.open(file_path, headers: true, header_converters: :symbol)
-    transaction = Transaction.new(csv.first)
-    assert_equal "1", transaction.id
-    assert_equal "1", transaction.invoice_id
-    assert_equal "4654405418249632", transaction.credit_card_number
-    assert_equal nil, transaction.credit_card_expiration_date
+    data = {
+      id: '50',
+      invoice_id: '50',
+      credit_card_number: '4540842003561938',
+      credit_card_expiration_date: '2014-11-25',
+      result: 'success',
+      created_at: '2012-11-28',
+      updated_at: '2014-10-15'
+      }
+    transaction = Transaction.new(data)
+    assert_equal "50", transaction.id
+    assert_equal "50", transaction.invoice_id
+    assert_equal "4540842003561938", transaction.credit_card_number
+    assert_equal "2014-11-25", transaction.credit_card_expiration_date
     assert_equal "success", transaction.result
-    assert_equal "2012-03-27 14:54:09 UTC", transaction.created_at
-    assert_equal "2012-03-27 14:54:09 UTC", transaction.updated_at
+    assert_equal "2012-11-28", transaction.created_at
+    assert_equal "2014-10-15", transaction.updated_at
   end
 end
