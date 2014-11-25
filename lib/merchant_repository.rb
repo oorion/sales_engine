@@ -1,11 +1,9 @@
 require_relative 'merchant'
 
 class MerchantRepository
-  def initialize(file_name)
+  attr_reader :entries
 
-  end
-
-  def merchants
-
+  def initialize(entries=[])
+    @entries = entries
   end
 end
