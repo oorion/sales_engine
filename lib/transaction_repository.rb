@@ -1,7 +1,9 @@
 require_relative 'transaction'
 
 class TransactionRepository
-  def initialize(entires = [])
+  attr_reader :entries
+
+  def initialize(entries = [])
       @entries = entries
   end
 end
