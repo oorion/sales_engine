@@ -1,7 +1,7 @@
 require_relative 'test_helper'
 require_relative '../lib/merchant'
 
-class MerchantTest < MiniTest::Test
+class MerchantTest < Minitest::Test
   def test_it_has_attributes
     data = {
       id: '1',

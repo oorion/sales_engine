@@ -2,7 +2,7 @@ require_relative 'test_helper'
 require_relative '../lib/transaction'
 require 'csv'
 
-class TransactionTest < MiniTest::Test
+class TransactionTest < Minitest::Test
   def test_it_has_attributes
     data = {
       id: '50',
