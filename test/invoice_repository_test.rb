@@ -1,7 +1,7 @@
 require_relative 'test_helper'
 require_relative '../lib/invoice_repository'
 
-class InvoiceRepositoryTest < MiniTest::Test
+class InvoiceRepositoryTest < Minitest::Test
   def test_it_has_a_collection_of_invoice_objects
     data = [{
       id: "1",

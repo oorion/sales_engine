@@ -1,7 +1,7 @@
 require_relative 'test_helper'
 require_relative '../lib/item_repository'
 
-class ItemRepositoryTest < MiniTest::Test
+class ItemRepositoryTest < Minitest::Test
   def test_it_has_a_collection_of_item_objects
     data = [{
       id: '1',
