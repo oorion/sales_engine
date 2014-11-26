@@ -21,10 +21,18 @@ class ItemRepositoryTest < Minitest::Test
         description: 'inventore deleniti',
         unit_price: '751',
         merchant_id: '2',
+        created_at: '2012-04-27 14:53:59 UTC',
+        updated_at: '2012-04-27 14:53:59 UTC'
+      },
+      {
+        id: '1',
+        name: 'name1',
+        description: 'Nihil autem',
+        unit_price: '75107',
+        merchant_id: '1',
         created_at: '2012-03-27 14:53:59 UTC',
         updated_at: '2012-03-27 14:53:59 UTC'
-      }
-      ].collect { |row| Item.new(row) }
+      }].collect { |row| Item.new(row) }
       @item_repository = ItemRepository.new(data)
   end
 
@@ -34,7 +42,7 @@ class ItemRepositoryTest < Minitest::Test
   end
 
   def test_can_return_all_items
-    assert_equal 2, item_repository.all.count
+    assert_equal 3, item_repository.all.count
   end
 
   def test_can_return_random_item
@@ -49,9 +57,9 @@ class ItemRepositoryTest < Minitest::Test
     assert_equal 'name1', item_repository.find_by_name('name1').name
   end
 
-  # def test_can_find_by_name_as_uppercase
-  #   assert_equal 'name1', item_repository.find_by_name('NAME1').name
-  # end
+  def test_can_find_by_name_as_uppercase
+    assert_equal 'name1', item_repository.find_by_name('NAME1').name
+  end
 
   def test_can_find_by_description
     assert_equal 'Nihil autem',
@@ -72,8 +80,46 @@ class ItemRepositoryTest < Minitest::Test
     item_repository.find_by_created_at('2012-03-27 14:53:59 UTC').created_at
   end
 
+  def test_can_find_by_created_at_with_lower_case
+    assert_equal '2012-03-27 14:53:59 UTC',
+    item_repository.find_by_created_at('2012-03-27 14:53:59 utc').created_at
+  end
+
   def test_can_find_by_updated_at
     assert_equal '2012-03-27 14:53:59 UTC',
     item_repository.find_by_updated_at('2012-03-27 14:53:59 UTC').updated_at
   end
+
+  def test_can_find_all_by_id
+    assert_equal 2, item_repository.find_all_by_id('1').count
+  end
+
+  def test_it_returns_empty_array_if_nothing_found_using_find_all_by_id
+    assert_equal [], item_repository.find_all_by_id('3')
+  end
+
+  def test_can_find_all_by_name
+    assert_equal 2, item_repository.find_all_by_name('name1').count
+  end
+
+  def test_can_find_all_by_description
+    assert_equal 2, item_repository.find_all_by_description('Nihil autem').count
+  end
+
+  def test_can_find_all_by_unit_price
+    assert_equal 2, item_repository.find_all_by_unit_price('75107').count
+  end
+
+  def test_can_find_all_by_merchant_id
+    assert_equal 2, item_repository.find_all_by_merchant_id('1').count
+  end
+
+  def test_can_find_all_by_created_at
+    assert_equal 2, item_repository.find_all_by_created_at('2012-03-27 14:53:59 UTC').count
+  end
+
+  def test_can_find_all_by_updated_at
+    assert_equal 2, item_repository.find_all_by_updated_at('2012-03-27 14:53:59 UTC').count
+  end
+
 end
