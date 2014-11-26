@@ -1,6 +1,5 @@
 require_relative 'test_helper'
 require_relative '../lib/transaction'
-require 'csv'
 
 class TransactionTest < Minitest::Test
   def test_it_has_attributes
