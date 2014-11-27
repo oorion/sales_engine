@@ -19,6 +19,10 @@ class MerchantRepository
     entries.find { |entry| entry.id == match }
   end
 
+  def find_by_name(match)
+    entries.find { |entry| entry.name == match }
+  end
+
   def find_by_created_at(match)
       entries.find { |entry| entry.created_at.downcase == match.downcase }
   end

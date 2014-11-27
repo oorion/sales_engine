@@ -45,6 +45,10 @@ class MerchantRepositoryTest < Minitest::Test
     assert_equal '1', merchant_repository.find_by_id('1').id
   end
 
+  def test_can_find_by_name
+    assert_equal 'Schroeder-Jerde', merchant_repository.find_by_name('Schroeder-Jerde').name
+  end
+
   def test_can_find_by_created_at
     assert_equal '2012-03-27 14:53:59 UTC',
     merchant_repository.find_by_created_at('2012-03-27 14:53:59 UTC').created_at
