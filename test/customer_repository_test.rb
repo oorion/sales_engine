@@ -7,7 +7,7 @@ class CustomerRepositoryTest < Minitest::Test
   def setup
     data = [{
       id: '23',
-      first_name: 'firstname',
+      first_name: 'fistname',
       last_name: 'lastname',
       created_at: '2012-11-28',
       updated_at: '2014-10-15'
