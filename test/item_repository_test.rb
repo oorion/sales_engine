@@ -49,9 +49,9 @@ class ItemRepositoryTest < Minitest::Test
     assert_equal 'name1', item_repository.find_by_name('name1').name
   end
 
-  # def test_can_find_by_name_as_uppercase
-  #   assert_equal 'name1', item_repository.find_by_name('NAME1').name
-  # end
+  def test_can_find_by_name_as_uppercase
+    assert_equal 'name1', item_repository.find_by_name('NAME1').name
+  end
 
   def test_can_find_by_description
     assert_equal 'Nihil autem',
