@@ -7,7 +7,7 @@ class CustomerRepositoryTest < Minitest::Test
   def setup
     data = [{
       id: '23',
-      first_name: 'fistname',
+      first_name: 'firstname',
       last_name: 'lastname',
       created_at: '2012-11-28',
       updated_at: '2014-10-15'
@@ -16,8 +16,8 @@ class CustomerRepositoryTest < Minitest::Test
         id: '33',
         first_name: 'somename',
         last_name: 'othername',
-        created_at: '2024-11-28',
-        updated_at: '2024-10-15'
+        created_at: '2024-11-29',
+        updated_at: '2014-10-15'
       },
       {
         id: '23',
@@ -50,5 +50,49 @@ class CustomerRepositoryTest < Minitest::Test
   def test_it_can_find_by_first_name
     assert_equal "somename",
     customer_repository.find_by_first_name("somename").first_name
+  end
+
+  def test_it_can_find_by_first_name_uppercase
+    assert_equal "somename",
+    customer_repository.find_by_first_name("Somename").first_name
+  end
+
+  def test_it_can_find_by_last_name
+    assert_equal "lastname",
+    customer_repository.find_by_last_name("lastname").last_name
+  end
+
+  def test_can_find_by_created_at
+    assert_equal '2012-11-28',
+    customer_repository.find_by_created_at('2012-11-28').created_at
+  end
+
+  def test_can_find_by_updated_at
+    assert_equal '2014-10-15',
+    customer_repository.find_by_updated_at('2014-10-15').updated_at
+  end
+
+  def test_can_find_all_by_id
+    assert_equal 2, customer_repository.find_all_by_id('23').count
+  end
+
+  def test_can_find_all_by_first_name
+    assert_equal 2,
+    customer_repository.find_all_by_first_name('firstname').count
+  end
+
+  def test_can_find_all_by_last_name
+    assert_equal 2,
+    customer_repository.find_all_by_last_name('lastname').count
+  end
+
+  def test_can_find_all_by_created_at
+    assert_equal 2,
+    customer_repository.find_all_by_created_at('2012-11-28').count
+  end
+
+  def test_can_find_all_by_updated_at
+    assert_equal 3,
+    customer_repository.find_all_by_updated_at('2014-10-15').count
   end
 end
