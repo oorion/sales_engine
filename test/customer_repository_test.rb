@@ -2,7 +2,7 @@ require_relative 'test_helper'
 require_relative '../lib/customer_repository'
 
 class CustomerRepositoryTest < Minitest::Test
-  attr_reader :customer_repository
+  attr_reader :customer_repository, :sales_engine
 
   def setup
     @data = [{
@@ -27,7 +27,8 @@ class CustomerRepositoryTest < Minitest::Test
         updated_at: '2014-10-15'
       }
     ]
-      @customer_repository = CustomerRepository.new(@data)
+    @sales_engine = Minitest::Mock.new
+    @customer_repository = CustomerRepository.new(@data, sales_engine)
   end
 
   def test_it_has_a_collection_of_customer_objects
@@ -100,5 +101,11 @@ class CustomerRepositoryTest < Minitest::Test
   def test_can_find_all_by_updated_at
     assert_equal 3,
     customer_repository.find_all_by_updated_at('2014-10-15').count
+  end
+
+  def test_it_delegates_invoices_to_sales_engine
+    sales_engine.expect(:find_invoices_from_invoice_repository, nil, ["23"])
+    customer_repository.find_invoices("23")
+    sales_engine.verify
   end
 end

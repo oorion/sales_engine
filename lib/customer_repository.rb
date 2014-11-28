@@ -1,14 +1,19 @@
 require_relative 'customer'
 
 class CustomerRepository
-  attr_reader :entries
+  attr_reader :entries, :sales_engine
 
-  def initialize(entries=[])
+  def initialize(entries=[], parent)
     @entries = create_entries(entries)
+    @sales_engine = parent
   end
 
   def create_entries(entries)
     entries.collect { |row| Customer.new(row, self) }
+  end
+
+  def find_invoices(id)
+    sales_engine.find_invoices_from_invoice_repository(id)
   end
 
   def all
