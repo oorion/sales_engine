@@ -63,4 +63,24 @@ class MerchantRepositoryTest < Minitest::Test
     assert_equal '2012-03-27 14:53:59 UTC',
     merchant_repository.find_by_updated_at('2012-03-27 14:53:59 UTC').updated_at
   end
+
+  def test_can_find_all_by_id
+    assert_equal 2, merchant_repository.find_all_by_id('1').count
+  end
+
+  def test_it_returns_empty_array_if_nothing_found_using_find_all_by_id
+    assert_equal [], merchant_repository.find_all_by_id('3')
+  end
+
+  def test_can_find_all_by_name
+    assert_equal 2, merchant_repository.find_all_by_name('Schroeder-Jerde').count
+  end
+
+  def test_can_find_all_by_created_at
+    assert_equal 2, merchant_repository.find_all_by_created_at('2012-03-27 14:53:59 UTC').count
+  end
+
+  def test_can_find_all_by_updated_at
+    assert_equal 2, merchant_repository.find_all_by_updated_at('2012-03-27 14:53:59 UTC').count
+  end
 end
