@@ -4,7 +4,11 @@ class CustomerRepository
   attr_reader :entries
 
   def initialize(entries=[])
-    @entries = entries
+    @entries = create_entries(entries)
+  end
+
+  def create_entries(entries)
+    entries.collect { |row| Customer.new(row, self) }
   end
 
   def all

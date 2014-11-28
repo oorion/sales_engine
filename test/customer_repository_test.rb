@@ -5,7 +5,7 @@ class CustomerRepositoryTest < Minitest::Test
   attr_reader :customer_repository
 
   def setup
-    data = [{
+    @data = [{
       id: '23',
       first_name: 'firstname',
       last_name: 'lastname',
@@ -26,13 +26,19 @@ class CustomerRepositoryTest < Minitest::Test
         created_at: '2012-11-28',
         updated_at: '2014-10-15'
       }
-      ].collect { |row| Customer.new(row) }
-      @customer_repository = CustomerRepository.new(data)
+    ]
+      @customer_repository = CustomerRepository.new(@data)
   end
 
-  def test_it_has_a_collection_of_customer_objects
-    assert_instance_of Array, customer_repository.entries
-    assert_instance_of Customer, customer_repository.entries[0]
+  # def test_it_has_a_collection_of_customer_objects
+  #   assert_instance_of Array, customer_repository.entries
+  #   assert_instance_of Customer, customer_repository.entries[0]
+  # end
+
+  def test_can_create_a_collection_of_customer_objects
+    entries = customer_repository.create_entries(@data)
+    assert_instance_of Array, entries
+    assert_instance_of Customer, entries[0]
   end
 
   def test_it_can_return_all_customers
