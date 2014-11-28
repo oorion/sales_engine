@@ -36,12 +36,12 @@ class InvoiceItemRepositoryTest < Minitest::Test
     @invoice_item_repository = InvoiceItemRepository.new(@data)
   end
 
-  # def test_it_has_a_collection_of_invoice_items
-  #   assert_instance_of Array, invoice_item_repository.entries
-  #   assert_instance_of InvoiceItem, invoice_item_repository.entries[0]
-  # end
+  def test_it_has_a_collection_of_invoice_items
+    assert_instance_of Array, invoice_item_repository.entries
+    assert_instance_of InvoiceItem, invoice_item_repository.entries[0]
+  end
 
-  def test_can_create_collection_of_invoice_items
+  def test_can_create_entries
     entries = invoice_item_repository.create_entries(@data)
     assert_instance_of Array, entries
     assert_instance_of InvoiceItem, entries[0]

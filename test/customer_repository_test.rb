@@ -30,12 +30,12 @@ class CustomerRepositoryTest < Minitest::Test
       @customer_repository = CustomerRepository.new(@data)
   end
 
-  # def test_it_has_a_collection_of_customer_objects
-  #   assert_instance_of Array, customer_repository.entries
-  #   assert_instance_of Customer, customer_repository.entries[0]
-  # end
+  def test_it_has_a_collection_of_customer_objects
+    assert_instance_of Array, customer_repository.entries
+    assert_instance_of Customer, customer_repository.entries[0]
+  end
 
-  def test_can_create_a_collection_of_customer_objects
+  def test_can_create_entries
     entries = customer_repository.create_entries(@data)
     assert_instance_of Array, entries
     assert_instance_of Customer, entries[0]
