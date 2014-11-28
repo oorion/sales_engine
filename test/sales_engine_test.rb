@@ -5,11 +5,31 @@ class SalesEngineTest < Minitest::Test
   attr_reader :sales_engine
 
   def setup
-    @sales_engine = SalesEngine.new
+    skip
+    @sales_engine = SalesEngine.new('test/fixtures/')
   end
 
-  def test_case_name
+  def test_has_a_repositories_with_a_collection_of_entries
+    skip
+    assert_instance_of MerchantRepository, sales_engine.merchant_repository
+    assert_instance_of Merchant, sales_engine.merchant_repository.entries[0]
+
+    assert_instance_of InvoiceRepository, sales_engine.invoice_repository
+    assert_instance_of Invoice, sales_engine.invoice_repository.entries[0]
+
+    assert_instance_of ItemRepository, sales_engine.item_repository
+    assert_instance_of Item, sales_engine.item_repository.entries[0]
+
+    assert_instance_of InvoiceItemRepository, sales_engine.invoice_item_repository
+    assert_instance_of InvoiceItem, sales_engine.invoice_item_repository.entries[0]
+
     assert_instance_of CustomerRepository, sales_engine.customer_repository
     assert_instance_of Customer, sales_engine.customer_repository.entries[0]
+
+    assert_instance_of TransactionRepository, sales_engine.transaction_repository
+    assert_instance_of Transaction, sales_engine.transaction_repository.entries[0]
   end
+
+
+
 end

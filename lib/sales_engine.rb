@@ -18,18 +18,23 @@ class SalesEngine
 
   attr_reader :customer_repository
 
-  def initialize
-    customer_entries = load_file('test/fixtures/customer_fixture.csv')
-    @customer_repository = CustomerRepository.new(customer_entries, self)
-  end
+  def initialize(directory = 'data/')
+    merchant_entries = load_file(directory + 'merchants.csv')
+    @merchant_repository = MerchantRepository.new(merchant_entries, self)
 
-  # def get_file_path(file_name)
-  #   expanded_path = File.expand_path('../test/fixtures', __dir__)
-  #   File.join(expanded_path, file_name)
-  # end
-  #
-  # def load_file(file_name)
-  #   file_path = get_file_path(file_name)
-  #   CSV.open(file_path, headers: true, header_converters: :symbol)
-  # end
+    invoice_entries = load_file(directory + 'invoices.csv')
+    @invoice_repository = InvoiceRepository.new(invoice_entries, self)
+
+    item_entries = load_file(directory + 'items.csv')
+    @item_repository = ItemRepository.new(item_entries, self)
+
+    invoice_item_entries = load_file(directory + 'invoice_items.csv')
+    @invoice_item_repository = InvoiceItemRepository.new(invoice_item_entries, self)
+
+    customer_entries = load_file(directory + 'customers.csv')
+    @customer_repository = CustomerRepository.new(customer_entries, self)
+
+    transaction_entries = load_file(directory + 'transactions.csv')
+    @transaction_repository = TransactionRepository.new(transaction_entries, self)
+  end
 end
