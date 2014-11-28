@@ -5,7 +5,7 @@ class CSVLoaderTest < Minitest::Test
   include CSVLoader
 
   def test_it_loads_a_file
-    file_name = '../test/fixtures/merchant_fixture.csv'
+    file_name = 'test/fixtures/merchants.csv'
     file = load_file(file_name)
     assert_instance_of CSV, file
   end
