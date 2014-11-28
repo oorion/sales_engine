@@ -12,7 +12,7 @@ class InvoiceTest < Minitest::Test
       updated_at: "2012-03-25 09:54:09 UTC"
     }
 
-    entry = Invoice.new(data)
+    entry = Invoice.new(data, '')
     assert_equal "1", entry.id
     assert_equal "1", entry.customer_id
     assert_equal "26", entry.merchant_id

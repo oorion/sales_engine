@@ -5,7 +5,7 @@ class InvoiceRepositoryTest < Minitest::Test
   attr_reader :invoice_repository
 
   def setup
-    data = [
+    @data = [
       {
         id: "1",
         customer_id: "1",
@@ -29,13 +29,17 @@ class InvoiceRepositoryTest < Minitest::Test
         status: "shipped",
         created_at: "2012-03-25 09:54:09 UTC",
         updated_at: "2012-03-25 09:54:09 UTC"
-      }].collect { |row| Invoice.new(row) }
-      @invoice_repository = InvoiceRepository.new(data)
+      }]
+      @invoice_repository = InvoiceRepository.new(@data)
   end
 
   def test_it_has_a_collection_of_invoice_objects
     assert_instance_of Array, invoice_repository.entries
     assert_instance_of Invoice, invoice_repository.entries.first
+  end
+
+  def test_can_create_entries
+    entries = invoice_repository.create_entries(@data)
   end
 
   def test_can_return_all_invoices

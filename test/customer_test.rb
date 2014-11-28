@@ -10,7 +10,7 @@ class CustomerTest < Minitest::Test
       created_at: '2012-11-28',
       updated_at: '2014-10-15'
     }
-    customer = Customer.new(data)
+    customer = Customer.new(data, '')
     assert_equal '23', customer.id
     assert_equal 'firstname', customer.first_name
     assert_equal 'lastname', customer.last_name
