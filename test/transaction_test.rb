@@ -2,7 +2,9 @@ require_relative 'test_helper'
 require_relative '../lib/transaction'
 
 class TransactionTest < Minitest::Test
-  def test_it_has_attributes
+  attr_reader :transaction, :parent
+
+  def setup
     data = {
       id: '50',
       invoice_id: '50',
@@ -11,8 +13,11 @@ class TransactionTest < Minitest::Test
       result: 'success',
       created_at: '2012-11-28',
       updated_at: '2014-10-15'
-      }
-    transaction = Transaction.new(data)
+    }
+    @transaction = Transaction.new(data, "")
+  end
+
+  def test_it_has_attributes
     assert_equal "50", transaction.id
     assert_equal "50", transaction.invoice_id
     assert_equal "4540842003561938", transaction.credit_card_number
