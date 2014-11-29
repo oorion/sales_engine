@@ -16,7 +16,12 @@ require_relative 'transaction_repository'
 class SalesEngine
   include CSVLoader
 
-  attr_reader :customer_repository
+  attr_reader :merchant_repository,
+              :invoice_repository,
+              :item_repository,
+              :invoice_item_repository,
+              :customer_repository,
+              :transaction_repository
 
   def initialize(directory = 'data/')
     merchant_entries = load_file(directory + 'merchants.csv')

@@ -1,10 +1,19 @@
 require_relative 'item'
 
 class ItemRepository
-  attr_reader :entries
+  attr_reader :entries, :sales_engine
 
-  def initialize(entries = [])
-    @entries = entries
+  def initialize(entries = [], parent)
+    @entries = create_entries(entries)
+    @sales_engine = parent
+  end
+
+  def create_entries(entries)
+    entries.collect { |row| Item.new(row, self) }
+  end
+
+  def find_invoice_items(id)
+    sales_engine.find_invoice_items_from_invoice_item_repository(id)
   end
 
   def all

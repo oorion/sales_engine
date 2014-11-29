@@ -2,10 +2,10 @@ require_relative 'test_helper'
 require_relative '../lib/item_repository'
 
 class ItemRepositoryTest < Minitest::Test
-  attr_reader :item_repository
+  attr_reader :item_repository, :sales_engine
 
   def setup
-    data = [
+    @data = [
       {
       id: '1',
       name: 'name1',
@@ -32,13 +32,20 @@ class ItemRepositoryTest < Minitest::Test
         merchant_id: '1',
         created_at: '2012-03-27 14:53:59 UTC',
         updated_at: '2012-03-27 14:53:59 UTC'
-      }].collect { |row| Item.new(row) }
-      @item_repository = ItemRepository.new(data)
+      }]
+      @sales_engine = Minitest::Mock.new
+      @item_repository = ItemRepository.new(@data, sales_engine)
   end
 
   def test_it_has_a_collection_of_item_objects
     assert_instance_of Array, item_repository.entries
     assert_instance_of Item, item_repository.entries[0]
+  end
+
+  def test_can_create_entries
+    entries = item_repository.create_entries(@data)
+    assert_instance_of Array, entries
+    assert_instance_of Item, entries[0]
   end
 
   def test_can_return_all_items
@@ -122,4 +129,9 @@ class ItemRepositoryTest < Minitest::Test
     assert_equal 2, item_repository.find_all_by_updated_at('2012-03-27 14:53:59 UTC').count
   end
 
+  def test_it_delegates_find_invoice_items_to_sales_engine
+    sales_engine.expect(:find_invoice_items_from_invoice_item_repository, nil, ['1'])
+    item_repository.find_invoice_items('1')
+    sales_engine.verify
+  end
 end

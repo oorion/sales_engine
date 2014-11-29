@@ -1,5 +1,10 @@
 class Customer
-  attr_reader :id, :first_name, :last_name, :created_at, :updated_at, :repository
+  attr_reader :id,
+              :first_name,
+              :last_name,
+              :created_at,
+              :updated_at,
+              :repository
 
   def initialize(data, parent)
     @id         = data[:id]
