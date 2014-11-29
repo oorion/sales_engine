@@ -2,7 +2,7 @@ require_relative 'test_helper'
 require_relative '../lib/invoice_item_repository'
 
 class InvoiceItemRepositoryTest < Minitest::Test
-  attr_reader :invoice_item_repository
+  attr_reader :invoice_item_repository, :sales_engine
 
   def setup
     @data = [
@@ -33,7 +33,8 @@ class InvoiceItemRepositoryTest < Minitest::Test
         created_at: '2012-03-27 14:54:09 UTC',
         updated_at: '2012-03-27 14:54:09 UTC'
       }]
-    @invoice_item_repository = InvoiceItemRepository.new(@data)
+    @sales_engine = Minitest::Mock.new
+    @invoice_item_repository = InvoiceItemRepository.new(@data, sales_engine)
   end
 
   def test_it_has_a_collection_of_invoice_items
@@ -113,5 +114,17 @@ class InvoiceItemRepositoryTest < Minitest::Test
 
   def test_can_find_all_by_updated_at
     assert_equal 2, invoice_item_repository.find_all_by_updated_at('2012-03-27 14:54:09 UTC').count
+  end
+
+  def test_delegates_find_invoice_to_sales_engine
+    sales_engine.expect(:find_invoice_from_invoice_repository, nil, ['1'])
+    invoice_item_repository.find_invoice('1')
+    sales_engine.verify
+  end
+
+  def test_delegates_find_item_to_sales_engine
+    sales_engine.expect(:find_item_from_item_repository, nil, ['539'])
+    invoice_item_repository.find_item('539')
+    sales_engine.verify
   end
 end
