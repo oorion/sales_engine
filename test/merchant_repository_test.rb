@@ -2,10 +2,10 @@ require_relative 'test_helper'
 require_relative '../lib/merchant_repository'
 
 class MerchantRepositoryTest < Minitest::Test
-    attr_reader :merchant_repository
+    attr_reader :merchant_repository, :sales_engine
 
     def setup
-      data = [
+      @data = [
         {
           id: '1',
           name: 'Schroeder-Jerde',
@@ -23,14 +23,21 @@ class MerchantRepositoryTest < Minitest::Test
           name: 'Schroeder-Jerde',
           created_at: '2012-03-27 14:53:59 UTC',
           updated_at: '2012-03-27 14:53:59 UTC'
-    }].collect { |row| Merchant.new(row) }
+    }]
 
-    @merchant_repository = MerchantRepository.new(data)
+    @sales_engine = Minitest::Mock.new
+    @merchant_repository = MerchantRepository.new(@data, sales_engine)
   end
 
   def test_it_has_a_collection_of_merchant_objects
     assert_instance_of Array, merchant_repository.entries
     assert_instance_of Merchant, merchant_repository.entries[0]
+  end
+
+  def test_can_create_entries
+      entries = merchant_repository.create_entries(@data)
+      assert_instance_of Array, entries
+      assert_instance_of Merchant, entries[0]
   end
 
   def test_can_return_all_merchants
