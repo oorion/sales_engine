@@ -1,10 +1,15 @@
 require_relative 'transaction'
 
 class TransactionRepository
-  attr_reader :entries
+  attr_reader :entries, :sales_engine
 
-  def initialize(entries = [])
-      @entries = entries
+  def initialize(entries = [], parent)
+      @entries = create_entries(entries)
+      @sales_engine = parent
+  end
+
+  def create_entries(entries)
+    entries.collect { |entry| Transaction.new(entry, self) }
   end
 
   def all
