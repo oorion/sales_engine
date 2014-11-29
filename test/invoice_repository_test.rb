@@ -2,7 +2,7 @@ require_relative 'test_helper'
 require_relative '../lib/invoice_repository'
 
 class InvoiceRepositoryTest < Minitest::Test
-  attr_reader :invoice_repository
+  attr_reader :invoice_repository, :sales_engine
 
   def setup
     @data = [
@@ -30,7 +30,8 @@ class InvoiceRepositoryTest < Minitest::Test
         created_at: "2012-03-25 09:54:09 UTC",
         updated_at: "2012-03-25 09:54:09 UTC"
       }]
-      @invoice_repository = InvoiceRepository.new(@data)
+      @sales_engine = Minitest::Mock.new
+      @invoice_repository = InvoiceRepository.new(@data, sales_engine)
   end
 
   def test_it_has_a_collection_of_invoice_objects

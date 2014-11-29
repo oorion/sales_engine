@@ -1,10 +1,11 @@
 require_relative 'invoice'
 
 class InvoiceRepository
-  attr_reader :entries
+  attr_reader :entries, :sales_engine
 
-  def initialize(entries = [])
+  def initialize(entries = [], parent)
     @entries = create_entries(entries)
+    @sales_engine = parent
   end
 
   def create_entries(entries)
