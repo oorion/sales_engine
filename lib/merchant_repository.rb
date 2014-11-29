@@ -1,10 +1,15 @@
 require_relative 'merchant'
 
 class MerchantRepository
-  attr_reader :entries
+  attr_reader :entries, :sales_engine
 
-  def initialize(entries=[])
-    @entries = entries
+  def initialize(entries=[], parent)
+    @entries = create_entries(entries)
+    @sales_engine = parent
+  end
+
+  def create_entries(entries)
+    entries.collect { |row| Merchant.new(row, self) }
   end
 
   def all
