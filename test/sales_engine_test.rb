@@ -37,4 +37,10 @@ class SalesEngineTest < Minitest::Test
     sales_engine.invoice_item_repository.verify
   end
 
+  def test_delegates_find_merchant_from_merchant_repository_to_merchant_repository
+    skip
+    sales_engine.merchant_repository.expect(:find_merchant, nil, ['1'])
+    sales_engine.find_merchant_from_merchant_repository('1')
+    sales_engine.merchant_repository.verify
+  end
 end

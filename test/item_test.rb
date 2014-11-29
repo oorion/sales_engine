@@ -33,4 +33,10 @@ class ItemTest < Minitest::Test
     entry.invoice_items
     parent.verify
   end
+
+  def test_it_delegates_merchant_to_its_repository
+    parent.expect(:find_merchant, nil, ['1'])
+    entry.merchant
+    parent.verify
+  end
 end
