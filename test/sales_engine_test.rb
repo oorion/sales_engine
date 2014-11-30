@@ -35,10 +35,10 @@ class SalesEngineTest < Minitest::Test
     sales_engine.merchant_repository.verify
   end
 
-  def test_delegates_find_invoices_from_invoice_repository_to_invoice_repository
+  def test_delegates_find_customer_invoices_from_invoice_repository_to_invoice_repository
     @sales_engine.invoice_repository = Minitest::Mock.new
-    sales_engine.invoice_repository.expect(:find_invoices, nil, ['1'])
-    sales_engine.find_invoices_from_invoice_repository('1')
+    sales_engine.invoice_repository.expect(:find_all_by_customer_id, nil, ['1'])
+    sales_engine.find_customer_invoices_from_invoice_repository('1')
     sales_engine.invoice_repository.verify
   end
 
@@ -58,29 +58,29 @@ class SalesEngineTest < Minitest::Test
 
   def test_assigns_responsibility_of_retrieving_transaction_invoice_to_invoice_repository
     @sales_engine.invoice_repository = Minitest::Mock.new
-    sales_engine.invoice_repository.expect(:find_transaction_invoice, nil, ['1'])
-    sales_engine.find_transaction_invoice_from_invoice_repository('1')
+    sales_engine.invoice_repository.expect(:find_by_id, nil, ['1'])
+    sales_engine.find_invoice_from_invoice_repository('1')
     sales_engine.invoice_repository.verify
   end
 
   def test_delegates_find_invoice_items_from_invoice_item_repository_to_invoice_item_repository
     sales_engine.invoice_item_repository = Minitest::Mock.new
-    sales_engine.invoice_item_repository.expect(:find_all_by_item_id, nil, ['1'])
+    sales_engine.invoice_item_repository.expect(:find_all_by_invoice_id, nil, ['1'])
     sales_engine.find_invoice_items_from_invoice_item_repository('1')
     sales_engine.invoice_item_repository.verify
   end
 
   def test_delegates_find_customer_from_customer_repository_to_customer_repository
     @sales_engine.customer_repository = Minitest::Mock.new
-    sales_engine.customer_repository.expect(:find_customer, nil, ['1'])
+    sales_engine.customer_repository.expect(:find_by_id, nil, ['1'])
     sales_engine.find_customer_from_customer_repository('1')
     sales_engine.customer_repository.verify
   end
 
   def test_delegates_find_transactions_from_transaction_repository_to_transaction_repository
     @sales_engine.transaction_repository = Minitest::Mock.new
-    sales_engine.transaction_repository.expect(:find_transactions, nil, ['1'])
-    sales_engine.find_transaction_from_transaction_repository('1')
+    sales_engine.transaction_repository.expect(:find_all_by_invoice_id, nil, ['1'])
+    sales_engine.find_transactions_from_transaction_repository('1')
     sales_engine.transaction_repository.verify
   end
 
@@ -110,5 +110,12 @@ class SalesEngineTest < Minitest::Test
     sales_engine.item_repository.expect(:find_by_id, nil, ['1'])
     sales_engine.find_item_from_item_repository('1')
     sales_engine.item_repository.verify
+  end
+
+  def test_delegates_find_items_by_way_of_invoice_item_repository_to_invoice_item_repository
+    @sales_engine.invoice_item_repository = Minitest::Mock.new
+    sales_engine.invoice_item_repository.expect(:find_and_convert_item_ids_to_items, nil, ['1'])
+    sales_engine.find_items_by_way_of_invoice_item_repository('1')
+    sales_engine.invoice_item_repository.verify
   end
 end

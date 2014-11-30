@@ -83,4 +83,15 @@ class InvoiceItemRepository
   def find_all_by_updated_at(match)
     entries.select { |entry| entry.updated_at.downcase == match.downcase }
   end
+
+  def find_and_convert_item_ids_to_items(id)
+    invoice_items_found = find_all_by_invoice_id(id)
+    convert_invoice_item_to_item(invoice_items_found).compact!
+  end
+
+  def convert_invoice_item_to_item(invoice_items)
+    invoice_items.map do |invoice_item|
+      sales_engine.find_item_from_item_repository(invoice_item.item_id)
+    end
+  end
 end

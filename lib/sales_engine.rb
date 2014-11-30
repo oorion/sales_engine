@@ -51,35 +51,35 @@ class SalesEngine
     invoice_repository.find_by_id(id)
   end
 
-  def find_invoices_from_invoice_repository(id)
-    invoice_repository.find_invoices(id)
-  end
-
-  def find_item_from_item_repository(id)
-    item_repository.find_by_id(id)
-  end
-
-  def find_invoice_items_from_invoice_item_repository(id)
-    invoice_item_repository.find_all_by_item_id(id)
-  end
-
-  def find_customer_from_customer_repository(id)
-    customer_repository.find_customer(id)
-  end
-
-  def find_transaction_from_transaction_repository(id)
-    transaction_repository.find_transactions(id)
+  def find_customer_invoices_from_invoice_repository(id)
+    invoice_repository.find_all_by_customer_id(id)
   end
 
   def find_merchant_invoices_from_invoice_repository(id)
     invoice_repository.find_all_by_merchant_id(id)
   end
 
-  def find_transaction_invoice_from_invoice_repository(id)
-    invoice_repository.find_transaction_invoice(id)
+  def find_item_from_item_repository(id)
+    item_repository.find_by_id(id)
   end
 
   def find_items_from_item_repository(id)
     item_repository.find_all_by_merchant_id(id)
+  end
+
+  def find_invoice_items_from_invoice_item_repository(id)
+    invoice_item_repository.find_all_by_invoice_id(id)
+  end
+
+  def find_customer_from_customer_repository(id)
+    customer_repository.find_by_id(id)
+  end
+
+  def find_transactions_from_transaction_repository(id)
+    transaction_repository.find_all_by_invoice_id(id)
+  end
+
+  def find_items_by_way_of_invoice_item_repository(id)
+    invoice_item_repository.find_and_convert_item_ids_to_items(id)
   end
 end
