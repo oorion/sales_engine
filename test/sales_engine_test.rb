@@ -50,15 +50,15 @@ class SalesEngineTest < Minitest::Test
   end
 
   def test_delegates_find_invoice_items_from_invoice_item_repository_to_invoice_item_repository
-    skip
-    sales_engine.invoice_item_repository.expect(:find_invoice_items, nil, ['1'])
+    sales_engine.invoice_item_repository = Minitest::Mock.new
+    sales_engine.invoice_item_repository.expect(:find_all_by_item_id, nil, ['1'])
     sales_engine.find_invoice_items_from_invoice_item_repository('1')
     sales_engine.invoice_item_repository.verify
   end
 
   def test_delegates_find_merchant_from_merchant_repository_to_merchant_repository
-    skip
-    sales_engine.merchant_repository.expect(:find_merchant, nil, ['1'])
+    sales_engine.merchant_repository = Minitest::Mock.new
+    sales_engine.merchant_repository.expect(:find_by_id, nil, ['1'])
     sales_engine.find_merchant_from_merchant_repository('1')
     sales_engine.merchant_repository.verify
   end
