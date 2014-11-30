@@ -12,6 +12,10 @@ class TransactionRepository
     entries.collect { |entry| Transaction.new(entry, self) }
   end
 
+  def find_invoice(id)
+    sales_engine.find_transaction_invoice_from_invoice_repository(id)
+  end
+
   def all
     entries
   end

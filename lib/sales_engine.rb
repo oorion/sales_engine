@@ -46,4 +46,16 @@ class SalesEngine
   def find_invoices_from_invoice_repository(id)
     invoice_repository.find_invoices(id)
   end
+
+  def find_merchant_invoices_from_invoice_repository(id)
+    invoice_repository.find_merchant_invoices(id)
+  end
+
+  def find_transaction_invoice_from_invoice_repository(id)
+    invoice_repository.find_transaction_invoice(id)
+  end
+
+  def find_items_from_item_repository(id)
+    item_repository.find_items(id)
+  end
 end

@@ -16,6 +16,14 @@ class InvoiceRepository
     find_all_by_customer_id(customer_id)
   end
 
+  def find_merchant_invoices(merchant_id)
+    find_all_by_merchant_id(merchant_id)
+  end
+
+  def find_transaction_invoice(invoice_id)
+    find_by_id(invoice_id)
+  end
+
   def all
     entries
   end

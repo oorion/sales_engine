@@ -114,4 +114,14 @@ class InvoiceRepositoryTest < Minitest::Test
     assert_equal 2, invoice_repository.find_invoices('1').count
     assert_instance_of Invoice, invoice_repository.find_invoices('1')[0]
   end
+
+  def test_can_find_merchant_invoices
+    assert_equal 2, invoice_repository.find_merchant_invoices('26').count
+    assert_instance_of Invoice, invoice_repository.find_merchant_invoices('26')[0]
+  end
+
+  def test_can_find_transaction_invoice
+    assert_equal '1', invoice_repository.find_transaction_invoice('1').id
+    assert_instance_of Invoice, invoice_repository.find_transaction_invoice('1')
+  end
 end
