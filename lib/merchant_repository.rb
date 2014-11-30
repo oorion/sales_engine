@@ -12,6 +12,10 @@ class MerchantRepository
     entries.collect { |row| Merchant.new(row, self) }
   end
 
+  def find_merchant(id)
+    find_all_by_id(id)
+  end
+
   def all
     entries
   end
