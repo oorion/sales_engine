@@ -12,10 +12,6 @@ class InvoiceItemRepository
     entries.collect { |row| InvoiceItem.new(row, self) }
   end
 
-  def find_invoice_items(invoice_id)
-    find_all_by_invoice_id(invoice_id)
-  end
-
   def find_invoice(id)
     sales_engine.find_invoice_from_invoice_repository(id)
   end

@@ -140,9 +140,4 @@ class ItemRepositoryTest < Minitest::Test
     item_repository.find_merchant('1')
     sales_engine.verify
   end
-
-  def test_can_find_items
-    assert_equal 2, item_repository.find_items('1').count
-    assert_instance_of Item, item_repository.find_items('1')[0]
-  end
 end

@@ -140,14 +140,9 @@ class InvoiceRepositoryTest < Minitest::Test
   end
 
   def test_it_delegates_merchant_to_sales_engine
-    sales_engine.expect(:find_merchant_from_merchant_repository , nil, ["1"])
-    invoice_repository.find_merchant("1")
+    sales_engine.expect(:find_merchant_from_merchant_repository , nil, ["26"])
+    invoice_repository.find_merchant("26")
     sales_engine.verify
-  end
-
-  def test_can_find_merchant_invoices
-    assert_equal 2, invoice_repository.find_merchant_invoices('26').count
-    assert_instance_of Invoice, invoice_repository.find_merchant_invoices('26')[0]
   end
 
   def test_can_find_transaction_invoice
