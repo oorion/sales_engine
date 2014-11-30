@@ -90,4 +90,16 @@ class MerchantRepositoryTest < Minitest::Test
   def test_can_find_all_by_updated_at
     assert_equal 2, merchant_repository.find_all_by_updated_at('2012-03-27 14:53:59 UTC').count
   end
+
+  def test_it_can_delegate_invoices_to_sales_engine
+    sales_engine.expect(:find_merchant_invoices_from_invoice_repository, nil, ['1'])
+    merchant_repository.find_invoices('1')
+    sales_engine.verify
+  end
+
+  def test_it_can_delegate_items_to_sales_engine
+    sales_engine.expect(:find_items_from_item_repository, nil, ['1'])
+    merchant_repository.find_items('1')
+    sales_engine.verify
+  end
 end
