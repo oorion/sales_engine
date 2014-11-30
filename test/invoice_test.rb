@@ -51,7 +51,7 @@ class InvoiceTest < Minitest::Test
   end
 
   def test_it_delegates_merchant_to_its_repository
-    parent.expect(:find_merchant, nil, ["1"])
+    parent.expect(:find_merchant, nil, ["26"])
     invoice.merchant
     parent.verify
   end

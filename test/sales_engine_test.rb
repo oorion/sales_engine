@@ -51,7 +51,7 @@ class SalesEngineTest < Minitest::Test
 
   def test_assigns_responsibility_of_retrieving_merchant_invoices_to_invoice_repository
     @sales_engine.invoice_repository = Minitest::Mock.new
-    sales_engine.invoice_repository.expect(:find_merchant_invoices, nil, ['2'])
+    sales_engine.invoice_repository.expect(:find_all_by_merchant_id, nil, ['2'])
     sales_engine.find_merchant_invoices_from_invoice_repository('2')
     sales_engine.invoice_repository.verify
   end
@@ -93,7 +93,7 @@ class SalesEngineTest < Minitest::Test
 
   def test_delgates_find_items_from_item_repository_to_item_repository
     @sales_engine.item_repository = Minitest::Mock.new
-    sales_engine.item_repository.expect(:find_items, nil, ['1'])
+    sales_engine.item_repository.expect(:find_all_by_merchant_id, nil, ['1'])
     sales_engine.find_items_from_item_repository('1')
     sales_engine.item_repository.verify
   end
