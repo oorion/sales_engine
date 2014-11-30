@@ -42,6 +42,13 @@ class SalesEngineTest < Minitest::Test
     sales_engine.invoice_repository.verify
   end
 
+  def test_assigns_responsibility_of_retrieving_transaction_invoice_to_invoice_repository
+    @sales_engine.invoice_repository = Minitest::Mock.new
+    sales_engine.invoice_repository.expect(:find_transaction_invoice, nil, ['1'])
+    sales_engine.find_transaction_invoice_from_invoice_repository('1')
+    sales_engine.invoice_repository.verify
+  end
+
   def test_delegates_find_invoice_items_from_invoice_item_repository_to_invoice_item_repository
     skip
     sales_engine.invoice_item_repository.expect(:find_invoice_items, nil, ['1'])
