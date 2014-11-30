@@ -127,4 +127,12 @@ class InvoiceItemRepositoryTest < Minitest::Test
     invoice_item_repository.find_item('539')
     sales_engine.verify
   end
+
+  def test_can_convert_invoice_item_objects_to_items
+    sales_engine.expect(:find_item_from_item_repository, nil, ['539'])
+    sales_engine.expect(:find_item_from_item_repository, nil, ['540'])
+    sales_engine.expect(:find_item_from_item_repository, nil, ['539'])
+    invoice_item_repository.convert_invoice_item_to_item(invoice_item_repository.entries)
+    sales_engine.verify
+  end
 end

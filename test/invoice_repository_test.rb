@@ -110,11 +110,6 @@ class InvoiceRepositoryTest < Minitest::Test
     assert_equal 2, invoice_repository.find_all_by_updated_at('2012-03-25 09:54:09 UTC').count
   end
 
-  def test_can_find_invoices
-    assert_equal 2, invoice_repository.find_invoices('1').count
-    assert_instance_of Invoice, invoice_repository.find_invoices('1')[0]
-  end
-
   def test_it_delegates_transactions_to_sales_engine
     sales_engine.expect(:find_transactions_from_transaction_repository , nil, ["1"])
     invoice_repository.find_transactions("1")
@@ -128,7 +123,7 @@ class InvoiceRepositoryTest < Minitest::Test
   end
 
   def test_it_delegates_items_to_sales_engine
-    sales_engine.expect(:find_items_from_item_repository , nil, ["1"])
+    sales_engine.expect(:find_items_by_way_of_invoice_item_repository , nil, ["1"])
     invoice_repository.find_items("1")
     sales_engine.verify
   end
@@ -143,10 +138,5 @@ class InvoiceRepositoryTest < Minitest::Test
     sales_engine.expect(:find_merchant_from_merchant_repository , nil, ["26"])
     invoice_repository.find_merchant("26")
     sales_engine.verify
-  end
-
-  def test_can_find_transaction_invoice
-    assert_equal '1', invoice_repository.find_transaction_invoice('1').id
-    assert_instance_of Invoice, invoice_repository.find_transaction_invoice('1')
   end
 end
