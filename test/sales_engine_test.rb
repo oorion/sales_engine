@@ -70,5 +70,17 @@ class SalesEngineTest < Minitest::Test
     sales_engine.item_repository.verify
   end
 
+  def test_delegates_find_invoice_from_invoice_repository_to_invoice_repository
+    @sales_engine.invoice_repository = Minitest::Mock.new
+    sales_engine.invoice_repository.expect(:find_by_id, nil, ['1'])
+    sales_engine.find_invoice_from_invoice_repository('1')
+    sales_engine.invoice_repository.verify
+  end
 
+  def test_delegates_find_item_from_item_repository_to_item_repository
+    @sales_engine.item_repository = Minitest::Mock.new
+    sales_engine.item_repository.expect(:find_by_id, nil, ['1'])
+    sales_engine.find_item_from_item_repository('1')
+    sales_engine.item_repository.verify
+  end
 end
