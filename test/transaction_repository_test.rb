@@ -6,8 +6,8 @@ class TransactionRepositoryTest < Minitest::Test
 
   def setup
     @data = [{
-      id: '50',
-      invoice_id: '50',
+      id: '1',
+      invoice_id: '1',
       credit_card_number: '4540842003561938',
       credit_card_expiration_date: '2014-11-25',
       result: 'success',
@@ -15,8 +15,8 @@ class TransactionRepositoryTest < Minitest::Test
       updated_at: '2014-10-15'
       },
       {
-        id: '49',
-        invoice_id: '49',
+        id: '2',
+        invoice_id: '2',
         credit_card_number: '4540842003561940',
         credit_card_expiration_date: '2014-11-26',
         result: 'success',
@@ -24,8 +24,8 @@ class TransactionRepositoryTest < Minitest::Test
         updated_at: '2014-10-25'
       },
       {
-        id: '50',
-        invoice_id: '50',
+        id: '1',
+        invoice_id: '1',
         credit_card_number: '4540842003561938',
         credit_card_expiration_date: '2014-11-25',
         result: 'success',
@@ -56,11 +56,11 @@ class TransactionRepositoryTest < Minitest::Test
   end
 
   def test_can_find_by_id
-    assert_equal '50', transaction_repository.find_by_id('50').id
+    assert_equal '1', transaction_repository.find_by_id('1').id
   end
 
   def test_can_find_by_invoice_id
-    assert_equal '49', transaction_repository.find_by_invoice_id('49').invoice_id
+    assert_equal '2', transaction_repository.find_by_invoice_id('2').invoice_id
   end
 
   def test_can_find_by_credit_card_number
@@ -86,7 +86,7 @@ class TransactionRepositoryTest < Minitest::Test
   end
 
   def test_can_find_all_by_id
-    assert_equal 2, transaction_repository.find_all_by_id('50').count
+    assert_equal 2, transaction_repository.find_all_by_id('1').count
   end
 
   def test_can_find_all_by_invoice_id
@@ -116,7 +116,13 @@ class TransactionRepositoryTest < Minitest::Test
   end
 
   def test_can_find_transactions
-    assert_equal 2, transaction_repository.find_transactions('50').count
-    assert_instance_of Transaction, transaction_repository.find_transactions('50')[0]
+    assert_equal 2, transaction_repository.find_transactions('1').count
+    assert_instance_of Transaction, transaction_repository.find_transactions('1')[0]
+  end
+
+  def test_it_delegates_an_invoice_request_by_status_to_sales_engine
+    sales_engine.expect(:find_transaction_invoice_from_invoice_repository, nil, ['1'])
+    transaction_repository.find_invoice('1')
+    sales_engine.verify
   end
 end

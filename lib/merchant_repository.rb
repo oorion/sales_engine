@@ -16,6 +16,14 @@ class MerchantRepository
     find_all_by_id(id)
   end
 
+  def find_invoices(id)
+    sales_engine.find_merchant_invoices_from_invoice_repository(id)
+  end
+
+  def find_items(id)
+    sales_engine.find_items_from_item_repository(id)
+  end
+
   def all
     entries
   end

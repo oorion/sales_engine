@@ -95,4 +95,16 @@ class MerchantRepositoryTest < Minitest::Test
     assert_equal 2, merchant_repository.find_merchant('1').count
     assert_instance_of Merchant, merchant_repository.find_merchant('1')[0]
   end
+
+  def test_it_can_delegate_invoices_to_sales_engine
+    sales_engine.expect(:find_merchant_invoices_from_invoice_repository, nil, ['1'])
+    merchant_repository.find_invoices('1')
+    sales_engine.verify
+  end
+
+  def test_it_can_delegate_items_to_sales_engine
+    sales_engine.expect(:find_items_from_item_repository, nil, ['1'])
+    merchant_repository.find_items('1')
+    sales_engine.verify
+  end
 end
