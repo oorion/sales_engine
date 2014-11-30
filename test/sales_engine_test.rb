@@ -5,12 +5,10 @@ class SalesEngineTest < Minitest::Test
   attr_reader :sales_engine
 
   def setup
-    skip
     @sales_engine = SalesEngine.new('test/fixtures/')
   end
 
   def test_has_a_repositories_with_a_collection_of_entries
-    skip
     assert_instance_of MerchantRepository, sales_engine.merchant_repository
     assert_instance_of Merchant, sales_engine.merchant_repository.entries[0]
 
@@ -28,6 +26,13 @@ class SalesEngineTest < Minitest::Test
 
     assert_instance_of TransactionRepository, sales_engine.transaction_repository
     assert_instance_of Transaction, sales_engine.transaction_repository.entries[0]
+  end
+
+  def test_delegates_find_invoices_from_invoice_repository_to_invoice_repository
+    @sales_engine.invoice_repository = Minitest::Mock.new
+    sales_engine.invoice_repository.expect(:find_invoices, nil, ['1'])
+    sales_engine.find_invoices_from_invoice_repository('1')
+    sales_engine.invoice_repository.verify
   end
 
   def test_delegates_find_invoice_items_from_invoice_item_repository_to_invoice_item_repository

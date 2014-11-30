@@ -12,6 +12,10 @@ class InvoiceRepository
     entries.collect { |row| Invoice.new(row, self) }
   end
 
+  def find_invoices(customer_id)
+    find_all_by_customer_id(customer_id)
+  end
+
   def all
     entries
   end
