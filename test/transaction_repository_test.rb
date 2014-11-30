@@ -111,4 +111,9 @@ class TransactionRepositoryTest < Minitest::Test
     assert_equal 1, transaction_repository.find_all_by_updated_at('2014-10-25').count
   end
 
+  def test_it_delegates_an_invoice_id_to_sales_engine
+    sales_engine.expect(:find_invoices_from_invoice_repository, nil, ['50'])
+    transaction_repository.find_invoice('50')
+    sales_engine.verify
+  end
 end
