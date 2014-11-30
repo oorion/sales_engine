@@ -90,7 +90,7 @@ class TransactionRepositoryTest < Minitest::Test
   end
 
   def test_can_find_all_by_invoice_id
-    assert_equal 2, transaction_repository.find_all_by_invoice_id('50').count
+    assert_equal 2, transaction_repository.find_all_by_invoice_id('1').count
   end
 
   def test_can_find_all_by_credit_card_number
@@ -115,7 +115,7 @@ class TransactionRepositoryTest < Minitest::Test
     assert_equal 1, transaction_repository.find_all_by_updated_at('2014-10-25').count
   end
 
-  def test_can_find_transactions
+  def test_can_find_transactions_by_invoice_id
     assert_equal 2, transaction_repository.find_transactions('1').count
     assert_instance_of Transaction, transaction_repository.find_transactions('1')[0]
   end
