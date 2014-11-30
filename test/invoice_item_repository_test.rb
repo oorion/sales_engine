@@ -127,4 +127,9 @@ class InvoiceItemRepositoryTest < Minitest::Test
     invoice_item_repository.find_item('539')
     sales_engine.verify
   end
+
+  def test_can_find_invoice_items
+    assert_equal 2, invoice_item_repository.find_invoice_items('1').count
+    assert_instance_of InvoiceItem, invoice_item_repository.find_invoice_items('1')[0]
+  end
 end

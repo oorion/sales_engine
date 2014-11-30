@@ -12,6 +12,10 @@ class TransactionRepository
     entries.collect { |entry| Transaction.new(entry, self) }
   end
 
+  def find_transactions(invoice_id)
+    find_all_by_invoice_id(invoice_id)
+  end
+
   def all
     entries
   end
@@ -50,6 +54,10 @@ class TransactionRepository
 
   def find_all_by_id(match)
     entries.select { |entry| entry.id == match }
+  end
+
+  def find_all_by_invoice_id(match)
+    entries.select { |entry| entry.invoice_id == match }
   end
 
   def find_all_by_credit_card_number(match)
