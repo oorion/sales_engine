@@ -89,6 +89,10 @@ class TransactionRepositoryTest < Minitest::Test
     assert_equal 2, transaction_repository.find_all_by_id('1').count
   end
 
+  def test_can_find_all_by_invoice_id
+    assert_equal 2, transaction_repository.find_all_by_invoice_id('1').count
+  end
+
   def test_can_find_all_by_credit_card_number
     assert_equal 2,
     transaction_repository.find_all_by_credit_card_number('4540842003561938').count
@@ -109,6 +113,11 @@ class TransactionRepositoryTest < Minitest::Test
 
   def test_can_find_all_by_updated_at
     assert_equal 1, transaction_repository.find_all_by_updated_at('2014-10-25').count
+  end
+
+  def test_can_find_transactions_by_invoice_id
+    assert_equal 2, transaction_repository.find_transactions('1').count
+    assert_instance_of Transaction, transaction_repository.find_transactions('1')[0]
   end
 
   def test_it_delegates_an_invoice_request_by_status_to_sales_engine

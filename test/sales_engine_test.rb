@@ -28,11 +28,25 @@ class SalesEngineTest < Minitest::Test
     assert_instance_of Transaction, sales_engine.transaction_repository.entries[0]
   end
 
+  def test_delegates_find_merchant_from_merchant_repository_to_merchant_repository
+    @sales_engine.merchant_repository = Minitest::Mock.new
+    sales_engine.merchant_repository.expect(:find_merchant, nil, ['1'])
+    sales_engine.find_merchant_from_merchant_repository('1')
+    sales_engine.merchant_repository.verify
+  end
+
   def test_delegates_find_invoices_from_invoice_repository_to_invoice_repository
     @sales_engine.invoice_repository = Minitest::Mock.new
     sales_engine.invoice_repository.expect(:find_invoices, nil, ['1'])
     sales_engine.find_invoices_from_invoice_repository('1')
     sales_engine.invoice_repository.verify
+  end
+
+  def test_delegates_find_item_from_item_repository_to_item_repository
+    @sales_engine.item_repository = Minitest::Mock.new
+    sales_engine.item_repository.expect(:find_by_id, nil, ['1'])
+    sales_engine.find_item_from_item_repository('1')
+    sales_engine.item_repository.verify
   end
 
   def test_assigns_responsibility_of_retrieving_merchant_invoices_to_invoice_repository
@@ -54,6 +68,20 @@ class SalesEngineTest < Minitest::Test
     sales_engine.invoice_item_repository.expect(:find_all_by_item_id, nil, ['1'])
     sales_engine.find_invoice_items_from_invoice_item_repository('1')
     sales_engine.invoice_item_repository.verify
+  end
+
+  def test_delegates_find_customer_from_customer_repository_to_customer_repository
+    @sales_engine.customer_repository = Minitest::Mock.new
+    sales_engine.customer_repository.expect(:find_customer, nil, ['1'])
+    sales_engine.find_customer_from_customer_repository('1')
+    sales_engine.customer_repository.verify
+  end
+
+  def test_delegates_find_transactions_from_transaction_repository_to_transaction_repository
+    @sales_engine.transaction_repository = Minitest::Mock.new
+    sales_engine.transaction_repository.expect(:find_transactions, nil, ['1'])
+    sales_engine.find_transaction_from_transaction_repository('1')
+    sales_engine.transaction_repository.verify
   end
 
   def test_delegates_find_merchant_from_merchant_repository_to_merchant_repository

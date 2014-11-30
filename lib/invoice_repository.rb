@@ -12,6 +12,28 @@ class InvoiceRepository
     entries.collect { |row| Invoice.new(row, self) }
   end
 
+  #calls to sales_engine
+  def find_transactions(id)
+    sales_engine.find_transactions_from_transaction_repository(id)
+  end
+
+  def find_invoice_items(id)
+    sales_engine.find_invoice_items_from_invoice_item_repository(id)
+  end
+
+  def find_items(id)
+    sales_engine.find_items_from_item_repository(id)
+  end
+
+  def find_customer(id)
+    sales_engine.find_customer_from_customer_repository(id)
+  end
+
+  def find_merchant(id)
+    sales_engine.find_merchant_from_merchant_repository(id)
+  end
+
+  #search repository for...
   def find_invoices(customer_id)
     find_all_by_customer_id(customer_id)
   end

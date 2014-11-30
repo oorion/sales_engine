@@ -115,6 +115,36 @@ class InvoiceRepositoryTest < Minitest::Test
     assert_instance_of Invoice, invoice_repository.find_invoices('1')[0]
   end
 
+  def test_it_delegates_transactions_to_sales_engine
+    sales_engine.expect(:find_transactions_from_transaction_repository , nil, ["1"])
+    invoice_repository.find_transactions("1")
+    sales_engine.verify
+  end
+
+  def test_it_delegates_invoice_items_to_sales_engine
+    sales_engine.expect(:find_invoice_items_from_invoice_item_repository , nil, ["1"])
+    invoice_repository.find_invoice_items("1")
+    sales_engine.verify
+  end
+
+  def test_it_delegates_items_to_sales_engine
+    sales_engine.expect(:find_items_from_item_repository , nil, ["1"])
+    invoice_repository.find_items("1")
+    sales_engine.verify
+  end
+
+  def test_it_delegates_customer_to_sales_engine
+    sales_engine.expect(:find_customer_from_customer_repository , nil, ["1"])
+    invoice_repository.find_customer("1")
+    sales_engine.verify
+  end
+
+  def test_it_delegates_merchant_to_sales_engine
+    sales_engine.expect(:find_merchant_from_merchant_repository , nil, ["1"])
+    invoice_repository.find_merchant("1")
+    sales_engine.verify
+  end
+
   def test_can_find_merchant_invoices
     assert_equal 2, invoice_repository.find_merchant_invoices('26').count
     assert_instance_of Invoice, invoice_repository.find_merchant_invoices('26')[0]

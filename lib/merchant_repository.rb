@@ -12,6 +12,10 @@ class MerchantRepository
     entries.collect { |row| Merchant.new(row, self) }
   end
 
+  def find_merchant(id)
+    find_all_by_id(id)
+  end
+
   def find_invoices(id)
     sales_engine.find_merchant_invoices_from_invoice_repository(id)
   end

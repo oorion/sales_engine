@@ -108,4 +108,9 @@ class CustomerRepositoryTest < Minitest::Test
     customer_repository.find_invoices("23")
     sales_engine.verify
   end
+
+  def test_can_find_customer
+    assert_equal 2, customer_repository.find_customer('23').count
+    assert_instance_of Customer, customer_repository.find_customer('23')[0]
+  end
 end
