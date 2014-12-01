@@ -20,23 +20,23 @@ class InvoiceItemTest < Minitest::Test
   end
 
   def test_it_has_attributes
-    assert_equal '1', invoice_item.id
-    assert_equal '539', invoice_item.item_id
-    assert_equal '1', invoice_item.invoice_id
-    assert_equal '5', invoice_item.quantity
+    assert_equal 1, invoice_item.id
+    assert_equal 539, invoice_item.item_id
+    assert_equal 1, invoice_item.invoice_id
+    assert_equal 5, invoice_item.quantity
     assert_equal '13635', invoice_item.unit_price
     assert_equal '2012-03-27 14:54:09 UTC', invoice_item.created_at
     assert_equal '2012-03-27 14:54:09 UTC', invoice_item.updated_at
   end
 
   def test_delegates_invoice_to_its_repository
-    parent.expect(:find_invoice, nil, ['1'])
+    parent.expect(:find_invoice, nil, [1])
     invoice_item.invoice
     parent.verify
   end
 
   def test_delegates_item_to_its_repository
-    parent.expect(:find_item, nil, ['539'])
+    parent.expect(:find_item, nil, [539])
     invoice_item.item
     parent.verify
   end

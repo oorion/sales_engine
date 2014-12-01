@@ -49,7 +49,7 @@ class MerchantRepositoryTest < Minitest::Test
   end
 
   def test_can_find_by_id
-    assert_equal '1', merchant_repository.find_by_id('1').id
+    assert_equal 1, merchant_repository.find_by_id(1).id
   end
 
   def test_can_find_by_name
@@ -72,11 +72,11 @@ class MerchantRepositoryTest < Minitest::Test
   end
 
   def test_can_find_all_by_id
-    assert_equal 2, merchant_repository.find_all_by_id('1').count
+    assert_equal 2, merchant_repository.find_all_by_id(1).count
   end
 
   def test_it_returns_empty_array_if_nothing_found_using_find_all_by_id
-    assert_equal [], merchant_repository.find_all_by_id('3')
+    assert_equal [], merchant_repository.find_all_by_id(3)
   end
 
   def test_can_find_all_by_name
@@ -92,14 +92,14 @@ class MerchantRepositoryTest < Minitest::Test
   end
 
   def test_it_can_delegate_invoices_to_sales_engine
-    sales_engine.expect(:find_merchant_invoices_from_invoice_repository, nil, ['1'])
-    merchant_repository.find_invoices('1')
+    sales_engine.expect(:find_merchant_invoices_from_invoice_repository, nil, [1])
+    merchant_repository.find_invoices(1)
     sales_engine.verify
   end
 
   def test_it_can_delegate_items_to_sales_engine
-    sales_engine.expect(:find_items_from_item_repository, nil, ['1'])
-    merchant_repository.find_items('1')
+    sales_engine.expect(:find_items_from_item_repository, nil, [1])
+    merchant_repository.find_items(1)
     sales_engine.verify
   end
 end

@@ -51,7 +51,7 @@ class CustomerRepositoryTest < Minitest::Test
   end
 
   def test_it_can_find_by_id
-    assert_equal "33", customer_repository.find_by_id("33").id
+    assert_equal 33, customer_repository.find_by_id(33).id
   end
 
   def test_it_can_find_by_first_name
@@ -80,7 +80,7 @@ class CustomerRepositoryTest < Minitest::Test
   end
 
   def test_can_find_all_by_id
-    assert_equal 2, customer_repository.find_all_by_id('23').count
+    assert_equal 2, customer_repository.find_all_by_id(23).count
   end
 
   def test_can_find_all_by_first_name
@@ -104,8 +104,8 @@ class CustomerRepositoryTest < Minitest::Test
   end
 
   def test_it_delegates_invoices_to_sales_engine
-    sales_engine.expect(:find_customer_invoices_from_invoice_repository, nil, ["23"])
-    customer_repository.find_invoices("23")
+    sales_engine.expect(:find_customer_invoices_from_invoice_repository, nil, [23])
+    customer_repository.find_invoices(23)
     sales_engine.verify
   end
 end
