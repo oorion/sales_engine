@@ -57,7 +57,7 @@ class ItemRepositoryTest < Minitest::Test
   end
 
   def test_can_find_by_id
-    assert_equal "1", item_repository.find_by_id('1').id
+    assert_equal 1, item_repository.find_by_id(1).id
   end
 
   def test_can_find_by_name
@@ -79,7 +79,7 @@ class ItemRepositoryTest < Minitest::Test
   end
 
   def test_can_find_by_merchant_id
-    assert_equal '1', item_repository.find_by_merchant_id('1').merchant_id
+    assert_equal 1, item_repository.find_by_merchant_id(1).merchant_id
   end
 
   def test_can_find_by_created_at
@@ -98,11 +98,11 @@ class ItemRepositoryTest < Minitest::Test
   end
 
   def test_can_find_all_by_id
-    assert_equal 2, item_repository.find_all_by_id('1').count
+    assert_equal 2, item_repository.find_all_by_id(1).count
   end
 
   def test_it_returns_empty_array_if_nothing_found_using_find_all_by_id
-    assert_equal [], item_repository.find_all_by_id('3')
+    assert_equal [], item_repository.find_all_by_id(3)
   end
 
   def test_can_find_all_by_name
@@ -118,7 +118,7 @@ class ItemRepositoryTest < Minitest::Test
   end
 
   def test_can_find_all_by_merchant_id
-    assert_equal 2, item_repository.find_all_by_merchant_id('1').count
+    assert_equal 2, item_repository.find_all_by_merchant_id(1).count
   end
 
   def test_can_find_all_by_created_at
@@ -130,14 +130,14 @@ class ItemRepositoryTest < Minitest::Test
   end
 
   def test_it_delegates_find_invoice_items_to_sales_engine
-    sales_engine.expect(:find_item_invoice_items_from_invoice_item_repository, nil, ['1'])
-    item_repository.find_invoice_items('1')
+    sales_engine.expect(:find_item_invoice_items_from_invoice_item_repository, nil, [1])
+    item_repository.find_invoice_items(1)
     sales_engine.verify
   end
 
   def test_it_delegates_find_merchant_to_sales_engine
-    sales_engine.expect(:find_merchant_from_merchant_repository, nil, ['1'])
-    item_repository.find_merchant('1')
+    sales_engine.expect(:find_merchant_from_merchant_repository, nil, [1])
+    item_repository.find_merchant(1)
     sales_engine.verify
   end
 end

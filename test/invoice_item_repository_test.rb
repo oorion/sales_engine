@@ -57,15 +57,15 @@ class InvoiceItemRepositoryTest < Minitest::Test
   end
 
   def test_can_find_by_id
-    assert_equal '1', invoice_item_repository.find_by_id('1').id
+    assert_equal 1, invoice_item_repository.find_by_id(1).id
   end
 
   def test_can_find_by_item_id
-    assert_equal '539', invoice_item_repository.find_by_item_id('539').item_id
+    assert_equal 539, invoice_item_repository.find_by_item_id(539).item_id
   end
 
   def test_can_find_by_invoice_id
-    assert_equal '1', invoice_item_repository.find_by_invoice_id('1').invoice_id
+    assert_equal 1, invoice_item_repository.find_by_invoice_id(1).invoice_id
   end
 
   def test_can_find_by_quantity
@@ -85,19 +85,19 @@ class InvoiceItemRepositoryTest < Minitest::Test
   end
 
   def test_can_find_all_by_id
-    assert_equal 2, invoice_item_repository.find_all_by_id('1').count
+    assert_equal 2, invoice_item_repository.find_all_by_id(1).count
   end
 
   def test_can_return_empty_array_if_nothing_found
-    assert_equal [], invoice_item_repository.find_all_by_id('3')
+    assert_equal [], invoice_item_repository.find_all_by_id(3)
   end
 
   def test_can_find_all_by_item_id
-    assert_equal 2, invoice_item_repository.find_all_by_item_id('539').count
+    assert_equal 2, invoice_item_repository.find_all_by_item_id(539).count
   end
 
   def test_can_find_all_by_invoice_id
-    assert_equal 2, invoice_item_repository.find_all_by_invoice_id('1').count
+    assert_equal 2, invoice_item_repository.find_all_by_invoice_id(1).count
   end
 
   def test_can_find_all_by_quantity
@@ -117,21 +117,21 @@ class InvoiceItemRepositoryTest < Minitest::Test
   end
 
   def test_delegates_find_invoice_to_sales_engine
-    sales_engine.expect(:find_invoice_from_invoice_repository, nil, ['1'])
-    invoice_item_repository.find_invoice('1')
+    sales_engine.expect(:find_invoice_from_invoice_repository, nil, [1])
+    invoice_item_repository.find_invoice(1)
     sales_engine.verify
   end
 
   def test_delegates_find_item_to_sales_engine
-    sales_engine.expect(:find_item_from_item_repository, nil, ['539'])
-    invoice_item_repository.find_item('539')
+    sales_engine.expect(:find_item_from_item_repository, nil, [539])
+    invoice_item_repository.find_item(539)
     sales_engine.verify
   end
 
   def test_can_convert_invoice_item_objects_to_items
-    sales_engine.expect(:find_item_from_item_repository, nil, ['539'])
-    sales_engine.expect(:find_item_from_item_repository, nil, ['540'])
-    sales_engine.expect(:find_item_from_item_repository, nil, ['539'])
+    sales_engine.expect(:find_item_from_item_repository, nil, [539])
+    sales_engine.expect(:find_item_from_item_repository, nil, [540])
+    sales_engine.expect(:find_item_from_item_repository, nil, [539])
     invoice_item_repository.convert_invoice_item_to_item(invoice_item_repository.entries)
     sales_engine.verify
   end

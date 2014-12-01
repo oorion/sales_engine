@@ -9,9 +9,9 @@ class InvoiceItem
               :repository
 
   def initialize(data, parent)
-    @id = data[:id]
-    @item_id = data[:item_id]
-    @invoice_id = data[:invoice_id]
+    @id = data[:id].to_i
+    @item_id = data[:item_id].to_i
+    @invoice_id = data[:invoice_id].to_i
     @quantity = data[:quantity]
     @unit_price = data[:unit_price]
     @created_at = data[:created_at]

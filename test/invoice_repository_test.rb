@@ -23,8 +23,8 @@ class InvoiceRepositoryTest < Minitest::Test
         updated_at: "2012-04-25 09:54:09 UTC"
       },
       {
-        id: "1",
-        customer_id: "1",
+        id: '1',
+        customer_id: '1',
         merchant_id: "26",
         status: "shipped",
         created_at: "2012-03-25 09:54:09 UTC",
@@ -52,15 +52,15 @@ class InvoiceRepositoryTest < Minitest::Test
   end
 
   def test_can_find_by_id
-    assert_equal '1', invoice_repository.find_by_id('1').id
+    assert_equal 1, invoice_repository.find_by_id(1).id
   end
 
   def test_can_find_by_customer_id
-    assert_equal '1', invoice_repository.find_by_customer_id('1').customer_id
+    assert_equal 1, invoice_repository.find_by_customer_id(1).customer_id
   end
 
   def test_can_find_by_merchant_id
-    assert_equal '26', invoice_repository.find_by_merchant_id('26').merchant_id
+    assert_equal 26, invoice_repository.find_by_merchant_id(26).merchant_id
   end
 
   def test_can_find_by_status
@@ -83,19 +83,19 @@ class InvoiceRepositoryTest < Minitest::Test
   end
 
   def test_can_find_all_by_id
-    assert_equal 2, invoice_repository.find_all_by_id('1').count
+    assert_equal 2, invoice_repository.find_all_by_id(1).count
   end
 
   def test_it_returns_empty_array_if_nothing_found_using_find_all_by_id
-    assert_equal [], invoice_repository.find_all_by_id('3')
+    assert_equal [], invoice_repository.find_all_by_id(3)
   end
 
   def test_can_find_all_by_customer_id
-    assert_equal 2, invoice_repository.find_all_by_customer_id('1').count
+    assert_equal 2, invoice_repository.find_all_by_customer_id(1).count
   end
 
   def test_can_find_all_by_merchant_id
-    assert_equal 2, invoice_repository.find_all_by_merchant_id('26').count
+    assert_equal 2, invoice_repository.find_all_by_merchant_id(26).count
   end
 
   def test_can_find_all_by_status
@@ -111,32 +111,32 @@ class InvoiceRepositoryTest < Minitest::Test
   end
 
   def test_it_delegates_transactions_to_sales_engine
-    sales_engine.expect(:find_transactions_from_transaction_repository , nil, ["1"])
-    invoice_repository.find_transactions("1")
+    sales_engine.expect(:find_transactions_from_transaction_repository , nil, [1])
+    invoice_repository.find_transactions(1)
     sales_engine.verify
   end
 
   def test_it_delegates_invoice_items_to_sales_engine
-    sales_engine.expect(:find_invoice_invoice_items_from_invoice_item_repository , nil, ["1"])
-    invoice_repository.find_invoice_items("1")
+    sales_engine.expect(:find_invoice_invoice_items_from_invoice_item_repository , nil, [1])
+    invoice_repository.find_invoice_items(1)
     sales_engine.verify
   end
 
   def test_it_delegates_items_to_sales_engine
-    sales_engine.expect(:find_items_by_way_of_invoice_item_repository , nil, ["1"])
-    invoice_repository.find_items("1")
+    sales_engine.expect(:find_items_by_way_of_invoice_item_repository , nil, [1])
+    invoice_repository.find_items(1)
     sales_engine.verify
   end
 
   def test_it_delegates_customer_to_sales_engine
-    sales_engine.expect(:find_customer_from_customer_repository , nil, ["1"])
-    invoice_repository.find_customer("1")
+    sales_engine.expect(:find_customer_from_customer_repository , nil, [1])
+    invoice_repository.find_customer(1)
     sales_engine.verify
   end
 
   def test_it_delegates_merchant_to_sales_engine
-    sales_engine.expect(:find_merchant_from_merchant_repository , nil, ["26"])
-    invoice_repository.find_merchant("26")
+    sales_engine.expect(:find_merchant_from_merchant_repository , nil, [26])
+    invoice_repository.find_merchant(26)
     sales_engine.verify
   end
 end
