@@ -23,7 +23,7 @@ class SalesEngine
                 :customer_repository,
                 :transaction_repository
 
-  def initialize(directory = 'data/')
+  def initialize(directory = 'data')
     merchant_entries = load_file(directory + 'merchants.csv')
     @merchant_repository = MerchantRepository.new(merchant_entries, self)
 

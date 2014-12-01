@@ -79,4 +79,8 @@ class TransactionRepository
   def find_all_by_updated_at(match)
     entries.select { |entry| entry.updated_at.downcase == match.downcase }
   end
+
+  def inspect
+    "#<#{self.class} #{@entries.size} rows>"
+  end
 end

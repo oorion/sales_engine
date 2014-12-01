@@ -94,4 +94,8 @@ class InvoiceItemRepository
       sales_engine.find_item_from_item_repository(invoice_item.item_id)
     end
   end
+
+  def inspect
+    "#<#{self.class} #{@entries.size} rows>"
+  end
 end
