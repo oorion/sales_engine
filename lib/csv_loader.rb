@@ -10,6 +10,4 @@ module CSVLoader
     file_path = get_file_path(file_name)
     CSV.open(file_path, headers: true, header_converters: :symbol)
   end
-
-
 end

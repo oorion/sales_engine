@@ -88,4 +88,7 @@ class InvoiceRepository
     entries.select { |entry| entry.updated_at.downcase == match.downcase }
   end
 
+  def inspect
+    "#<#{self.class} #{@entries.size} rows>"
+  end
 end
