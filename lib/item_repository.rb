@@ -13,7 +13,7 @@ class ItemRepository
   end
 
   def find_invoice_items(id)
-    sales_engine.find_invoice_items_from_invoice_item_repository(id)
+    sales_engine.find_item_invoice_items_from_invoice_item_repository(id)
   end
 
   def find_merchant(id)
