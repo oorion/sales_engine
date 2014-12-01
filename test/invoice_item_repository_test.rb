@@ -69,7 +69,7 @@ class InvoiceItemRepositoryTest < Minitest::Test
   end
 
   def test_can_find_by_quantity
-    assert_equal '5', invoice_item_repository.find_by_quantity('5').quantity
+    assert_equal 5, invoice_item_repository.find_by_quantity(5).quantity
   end
 
   def test_can_find_by_unit_price
@@ -101,7 +101,7 @@ class InvoiceItemRepositoryTest < Minitest::Test
   end
 
   def test_can_find_all_by_quantity
-    assert_equal 2, invoice_item_repository.find_all_by_quantity('5').count
+    assert_equal 2, invoice_item_repository.find_all_by_quantity(5).count
   end
 
   def test_can_find_all_by_unit_price

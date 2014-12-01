@@ -10,6 +10,7 @@ class IntegrationTest < Minitest::Test
   end
 
   def test_can_find_and_convert_item_ids_to_items
+    skip
     invoice = sales_engine.invoice_repository.entries.first
     invoice_items = invoice.items
     assert_equal 1, invoice_items.count
