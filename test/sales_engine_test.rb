@@ -63,10 +63,10 @@ class SalesEngineTest < Minitest::Test
     sales_engine.invoice_repository.verify
   end
 
-  def test_delegates_find_invoice_items_from_invoice_item_repository_to_invoice_item_repository
+  def test_delegates_find_invoice_invoice_items_from_invoice_item_repository_to_invoice_item_repository
     sales_engine.invoice_item_repository = Minitest::Mock.new
     sales_engine.invoice_item_repository.expect(:find_all_by_invoice_id, nil, ['1'])
-    sales_engine.find_invoice_items_from_invoice_item_repository('1')
+    sales_engine.find_invoice_invoice_items_from_invoice_item_repository('1')
     sales_engine.invoice_item_repository.verify
   end
 
@@ -116,6 +116,13 @@ class SalesEngineTest < Minitest::Test
     @sales_engine.invoice_item_repository = Minitest::Mock.new
     sales_engine.invoice_item_repository.expect(:find_and_convert_item_ids_to_items, nil, ['1'])
     sales_engine.find_items_by_way_of_invoice_item_repository('1')
+    sales_engine.invoice_item_repository.verify
+  end
+
+  def test_delegates_find_item_invoice_items_from_invoice_item_repository_to_invoice_repository
+    sales_engine.invoice_item_repository = Minitest::Mock.new
+    sales_engine.invoice_item_repository.expect(:find_all_by_item_id, nil, ['1'])
+    sales_engine.find_item_invoice_items_from_invoice_item_repository('1')
     sales_engine.invoice_item_repository.verify
   end
 end

@@ -1,3 +1,4 @@
+require 'bigdecimal'
 require_relative 'merchant'
 
 class MerchantRepository
@@ -18,6 +19,21 @@ class MerchantRepository
 
   def find_items(id)
     sales_engine.find_items_from_item_repository(id)
+  end
+
+  def most_revenue(num)
+    merchant_hash = {}
+    entries.each do |merchant|
+      total_revenue = merchant.invoices.map do |invoice|
+        invoice.invoice_items.map do |invoice_item|
+          (BigDecimal.new(invoice_item.unit_price) * 100) * (BigDecimal.new(invoice_item.quantity) * 100)
+        end.reduce(:+)
+      end.reduce(:+)
+      merchant_hash[total_revenue] = merchant
+    end
+    merchant_hash.keys.sort.reverse[0..num-1].map do |revenue|
+      merchant_hash[revenue]
+    end
   end
 
   def all

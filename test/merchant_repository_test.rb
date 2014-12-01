@@ -35,9 +35,9 @@ class MerchantRepositoryTest < Minitest::Test
   end
 
   def test_can_create_entries
-      entries = merchant_repository.create_entries(@data)
-      assert_instance_of Array, entries
-      assert_instance_of Merchant, entries[0]
+    entries = merchant_repository.create_entries(@data)
+    assert_instance_of Array, entries
+    assert_instance_of Merchant, entries[0]
   end
 
   def test_can_return_all_merchants

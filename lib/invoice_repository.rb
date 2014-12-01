@@ -17,7 +17,7 @@ class InvoiceRepository
   end
 
   def find_invoice_items(id)
-    sales_engine.find_invoice_items_from_invoice_item_repository(id)
+    sales_engine.find_invoice_invoice_items_from_invoice_item_repository(id)
   end
 
   def find_items(id)

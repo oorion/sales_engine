@@ -86,7 +86,7 @@ class InvoiceItemRepository
 
   def find_and_convert_item_ids_to_items(id)
     invoice_items_found = find_all_by_invoice_id(id)
-    convert_invoice_item_to_item(invoice_items_found).compact!
+    convert_invoice_item_to_item(invoice_items_found).compact!.uniq
   end
 
   def convert_invoice_item_to_item(invoice_items)

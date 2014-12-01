@@ -117,7 +117,7 @@ class InvoiceRepositoryTest < Minitest::Test
   end
 
   def test_it_delegates_invoice_items_to_sales_engine
-    sales_engine.expect(:find_invoice_items_from_invoice_item_repository , nil, ["1"])
+    sales_engine.expect(:find_invoice_invoice_items_from_invoice_item_repository , nil, ["1"])
     invoice_repository.find_invoice_items("1")
     sales_engine.verify
   end
