@@ -20,4 +20,10 @@ class Merchant
   def items
     repository.find_items(id)
   end
+
+  def revenue
+
+  end
+
+
 end

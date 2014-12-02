@@ -22,6 +22,11 @@ class IntegrationTest < Minitest::Test
     skip
     sales_engine = SalesEngine.new
     assert_equal "Dicki-Bednar", sales_engine.merchant_repository.most_revenue(1).first.name
-    assert_equal ["Dicki-Bednar", "Kassulke, O'Hara and Quitzon"], sales_engine.merchant_repository.most_revenue(2).map { |merchant| merchant.name }
+    assert_equal ["Dicki-Bednar", "Kassulke, O'Hara and Quitzon"],
+                 sales_engine.merchant_repository.most_revenue(2).map { |merchant| merchant.name }
+  end
+
+  def test_it_can_find_total_revenue_per_merchant
+    assert_equal BigDecimal.new('3706.16'), sales_engine.merchant_repository.merchant.revenue
   end
 end
