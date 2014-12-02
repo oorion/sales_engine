@@ -43,4 +43,13 @@ class Merchant
       end
     end
   end
+
+  def favorite_customer
+    grouped_customers = successful_invoices.group_by do |invoice|
+      invoice.customer_id
+    end
+    favorite_customer_id = grouped_customers.max_by do |customer|
+      customer[1].length
+    end.last.first.customer
+  end
 end

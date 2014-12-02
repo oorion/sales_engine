@@ -32,4 +32,8 @@ class IntegrationTest < Minitest::Test
   def test_merchant_can_calculate_revenue_by_date
     assert_equal (BigDecimal.new('29973') / 100) * 6, sales_engine.merchant_repository.entries.last.revenue(Date.parse('2012-03-07 12:54:10 UTC'))
   end
+
+  def test_merchant_can_find_favorite_customer
+    assert_equal 7, SalesEngine.new.merchant_repository.entries.first.favorite_customer.id
+  end
 end
