@@ -22,7 +22,7 @@ class ItemTest < Minitest::Test
     assert_equal 1, entry.id
     assert_equal "Item Qui Esse", entry.name
     assert_equal "Nihil autem sit odio inventore deleniti. Est laudantium ratione distinctio laborum. Minus voluptatem nesciunt assumenda dicta voluptatum porro.", entry.description
-    assert_equal '75107', entry.unit_price
+    assert_equal BigDecimal.new('751.07'), entry.unit_price
     assert_equal 1, entry.merchant_id
     assert_equal "2012-03-27 14:53:59 UTC", entry.created_at
     assert_equal "2012-03-27 14:53:59 UTC", entry.updated_at
