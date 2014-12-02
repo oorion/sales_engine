@@ -24,4 +24,12 @@ class IntegrationTest < Minitest::Test
     assert_equal "Dicki-Bednar", sales_engine.merchant_repository.most_revenue(1).first.name
     assert_equal ["Dicki-Bednar", "Kassulke, O'Hara and Quitzon"], sales_engine.merchant_repository.most_revenue(2).map { |merchant| merchant.name }
   end
+
+  def test_merchant_can_calculate_revenue
+    assert_equal (BigDecimal.new('29973') / 100) * 6, sales_engine.merchant_repository.entries.last.revenue
+  end
+
+  def test_merchant_can_calculate_revenue_by_date
+    assert_equal (BigDecimal.new('29973') / 100) * 6, sales_engine.merchant_repository.entries.last.revenue(Date.parse('2012-03-07 12:54:10 UTC'))
+  end
 end
