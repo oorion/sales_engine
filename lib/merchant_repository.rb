@@ -22,17 +22,27 @@ class MerchantRepository
   end
 
   def most_revenue(num)
-    merchant_hash = {}
-    entries.each do |merchant|
-      total_revenue = merchant.invoices.map do |invoice|
-        invoice.invoice_items.map do |invoice_item|
-          (BigDecimal.new(invoice_item.unit_price) * 100) * (BigDecimal.new(invoice_item.quantity) * 100)
-        end.reduce(:+)
-      end.reduce(:+)
-      merchant_hash[total_revenue] = merchant
-    end
-    merchant_hash.keys.sort.reverse[0..num-1].map do |revenue|
-      merchant_hash[revenue]
+    entries.sort_by do |merchant|
+      merchant.revenue
+    end.reverse[0..num-1]
+  end
+
+  def revenue(date)
+    entries.reduce(0) { |sum, merchant| sum + merchant.revenue(date) }
+  end
+
+  def most_items(num)
+    sorted_merchants_and_items_sold = merchants_and_items_sold.sort_by do |n|
+      n[1]
+    end.reverse
+    sorted_merchants_and_items_sold.map do |n|
+      n[0]
+    end[0..num-1]
+  end
+
+  def merchants_and_items_sold
+    entries.map do |merchant|
+      [ merchant, merchant.number_of_items_sold ]
     end
   end
 

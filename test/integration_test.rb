@@ -24,4 +24,29 @@ class IntegrationTest < Minitest::Test
     assert_equal "Dicki-Bednar", sales_engine.merchant_repository.most_revenue(1).first.name
     assert_equal ["Dicki-Bednar", "Kassulke, O'Hara and Quitzon"], sales_engine.merchant_repository.most_revenue(2).map { |merchant| merchant.name }
   end
+
+  def test_merchant_can_calculate_revenue
+    assert_equal (BigDecimal.new('29973') / 100) * 6, sales_engine.merchant_repository.entries.last.revenue
+  end
+
+  def test_merchant_can_calculate_revenue_by_date
+    assert_equal (BigDecimal.new('29973') / 100) * 6, sales_engine.merchant_repository.entries.last.revenue(Date.parse('2012-03-07 12:54:10 UTC'))
+  end
+
+  def test_merchant_can_find_favorite_customer
+    assert_equal 7, SalesEngine.new.merchant_repository.entries.first.favorite_customer.id
+  end
+
+  def test_merchant_can_find_customers_with_pending_invoices
+    assert_equal 3, SalesEngine.new.merchant_repository.entries.first.customers_with_pending_invoices.length
+  end
+
+  def test_merchant_repository_can_find_most_items_sold
+    assert_equal 1, SalesEngine.new.merchant_repository.most_items(1).length
+    assert_equal ["Kassulke, O'Hara and Quitzon", "Kozey Group", "Thiel Inc"], SalesEngine.new.merchant_repository.most_items(3).map { |merchant| merchant.name }
+  end
+
+  def test_merchant_repository_can_find_total_revenue_by_date_for_all_merchants
+    assert_equal BigDecimal.new('190836805') / 100, SalesEngine.new.merchant_repository.revenue(Date.parse("2012-03-27 14:54:09 UTC"))
+  end
 end
