@@ -91,4 +91,8 @@ class InvoiceRepository
   def inspect
     "#<#{self.class} #{@entries.size} rows>"
   end
+
+  def create(data)
+    Invoice.new(data, self)
+  end
 end
