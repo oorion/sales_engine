@@ -142,17 +142,4 @@ class InvoiceRepositoryTest < Minitest::Test
     invoice_repository.find_merchant(26)
     sales_engine.verify
   end
-
-  def test_create_method_creates_a_new_invoice
-    customer = Customer.new({id: '23', first_name: 'firstname', last_name: 'lastname', created_at: '2012-11-28', updated_at: '2014-10-15'}, "")
-    merchant = Merchant.new({id: '1', name: 'Schroeder-Jerde', created_at: '2012-03-27 14:53:59 UTC', updated_at: '2012-03-27 14:53:59 UTC'}, "")
-    item1    = Item.new({id: '1', name: 'Item Qui Esse', description: 'Nihil autem sit odio inventore deleniti. Est laudantium ratione distinctio laborum. Minus voluptatem nesciunt assumenda dicta voluptatum porro.', unit_price: '75107', merchant_id: '1', created_at: '2012-03-27 14:53:59 UTC', updated_at: '2012-03-27 14:53:59 UTC'}, "")
-    item2    = Item.new({id: '2', name: 'Item Qui Esse', description: 'Nihil autem sit odio inventore deleniti. Est laudantium ratione distinctio laborum. Minus voluptatem nesciunt assumenda dicta voluptatum porro.', unit_price: '75107', merchant_id: '1', created_at: '2012-03-27 14:53:59 UTC', updated_at: '2012-03-27 14:53:59 UTC'}, "")
-    item3    = Item.new({id: '3', name: 'Item Qui Esse', description: 'Nihil autem sit odio inventore deleniti. Est laudantium ratione distinctio laborum. Minus voluptatem nesciunt assumenda dicta voluptatum porro.', unit_price: '75107', merchant_id: '1', created_at: '2012-03-27 14:53:59 UTC', updated_at: '2012-03-27 14:53:59 UTC'}, "")
-    invoice = invoice_repository.create({customer: customer, merchant: merchant, status: "shipped",
-    items: [item1, item2, item3]})
-    assert_equal customer, invoice.customer
-    assert_equal merchant, invoice.merchant
-    assert_equal "success", invoice.status
-  end
 end

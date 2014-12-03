@@ -93,6 +93,12 @@ class InvoiceRepository
   end
 
   def create(data)
-    Invoice.new(data, self)
+    Invoice.new(data, self).tap do |invoice|
+      entries << formatted_invoice
+    end
+  end
+
+  def formatted_invoice(data)
+    { data[:customer].id }
   end
 end

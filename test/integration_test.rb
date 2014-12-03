@@ -1,7 +1,6 @@
 require_relative 'test_helper'
 require_relative '../lib/sales_engine'
 
-
 class IntegrationTest < Minitest::Test
   attr_reader :sales_engine, :production_sales_engine
 
@@ -49,5 +48,42 @@ class IntegrationTest < Minitest::Test
 
   def test_merchant_repository_can_find_total_revenue_by_date_for_all_merchants
     assert_equal BigDecimal.new('190836805') / 100, production_sales_engine.merchant_repository.revenue(Date.parse("2012-03-27 14:54:09 UTC"))
+  end
+
+  def test_create_method_creates_a_new_invoice
+    customer = sales_engine.customer_repository.entries[0]
+    merchant = sales_engine.merchant_repository.entries[0]
+    item1    = sales_engine.item_repository.entries[0]
+    item2    = sales_engine.item_repository.entries[1]
+    item3    = sales_engine.item_repository.entries[2]
+    invoice = sales_engine.invoice_repository.create({customer: customer, merchant: merchant, status: "shipped", items: [item1, item2, item3]})
+    assert_equal customer, invoice.customer
+    assert_equal merchant, invoice.merchant
+    assert_equal "shipped", invoice.status
+  end
+
+  def test_entries_has_a_new_invoice
+    customer = sales_engine.customer_repository.entries[0]
+    merchant = sales_engine.merchant_repository.entries[0]
+    item1    = sales_engine.item_repository.entries[0]
+    item2    = sales_engine.item_repository.entries[1]
+    item3    = sales_engine.item_repository.entries[2]
+    invoice = sales_engine.invoice_repository.create({customer: customer, merchant: merchant, status: "shipped", items: [item1, item2, item3]})
+    assert_equal 1, sales_engine.invoice_repository.entries.last.customer.id
+  end
+
+  def test_the_invoice_format_is_correct
+    customer = sales_engine.customer_repository.entries[0]
+    merchant = sales_engine.merchant_repository.entries[0]
+    item1    = sales_engine.item_repository.entries[0]
+    item2    = sales_engine.item_repository.entries[1]
+    item3    = sales_engine.item_repository.entries[2]
+    invoice = sales_engine.invoice_repository.create({customer: customer, merchant: merchant, status: "shipped", items: [item1, item2, item3]})
+    assert_equal 11, sales_engine.invoice_repository.entries.last.id
+    assert_equal 1, sales_engine.invoice_repository.entries.last.customer_id
+    assert_equal 1, sales_engine.invoice_repository.entries.last.merchant_id
+    assert_equal "shipped", sales_engine.invoice_repository.entries.last.status
+    assert sales_engine.invoice_repository.entries.last.created_at
+    assert sales_engine.invoice_repository.entries.last.updated_at
   end
 end
