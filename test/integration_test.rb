@@ -52,10 +52,10 @@ class IntegrationTest < Minitest::Test
   end
 
   def test_customer_can_get_transactions
-    assert_equal 7, SalesEngine.new.customer_repository.entries.first.transactions.length
+    assert_equal 7, production_sales_engine.customer_repository.entries.first.transactions.length
   end
 
   def test_customer_can_get_favorite_merchant
-    assert_equal 'blah', SalesEngine.new.customer_repository.entries.first.favorite_merchant#.name
+    assert_equal 'Balistreri, Schaefer and Kshlerin', production_sales_engine.customer_repository.entries.first.favorite_merchant.name
   end
 end
