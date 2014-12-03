@@ -49,4 +49,12 @@ class IntegrationTest < Minitest::Test
   def test_merchant_repository_can_find_total_revenue_by_date_for_all_merchants
     assert_equal BigDecimal.new('190836805') / 100, SalesEngine.new.merchant_repository.revenue(Date.parse("2012-03-27 14:54:09 UTC"))
   end
+
+  def test_customer_can_get_transactions
+    assert_equal 7, SalesEngine.new.customer_repository.entries.first.transactions.length
+  end
+
+  def test_customer_can_get_favorite_merchant
+    assert_equal 'blah', SalesEngine.new.customer_repository.entries.first.favorite_merchant#.name
+  end
 end

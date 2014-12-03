@@ -18,4 +18,14 @@ class Customer
   def invoices
     repository.find_invoices(id)
   end
+
+  def transactions
+    invoices.reduce([]) do |output, invoice|
+      output + invoice.transactions
+    end
+  end
+
+  def favorite_merchant
+
+  end
 end
