@@ -20,6 +20,23 @@ class ItemRepository
     sales_engine.find_merchant_from_merchant_repository(id)
   end
 
+  def most_revenue(num)
+    entries.each_with_object({}) do |item, hash|
+      item_revenue = item.invoice_items.reduce(0) do |sum, ii|
+        sum + ii.unit_price * ii.quantity
+      end
+      hash[item] = item_revenue
+    end.sort_by { |key, val| val }.reverse.map { |n| n[0] }[0..num-1]
+  end
+
+  def most_items(num)
+    entries.each_with_object({}) do |item, hash|
+      successful_invoice_items = item.invoice_items.select { |ii| ii.successful? }
+      total_quantity = successful_invoice_items.reduce(0) {|sum, n| sum + n.quantity}
+      hash[item] = total_quantity
+    end.sort_by { |key, val| val }.reverse.map { |n| n[0] }[0..num-1]
+  end
+
   def all
     entries
   end
