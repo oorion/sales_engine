@@ -49,4 +49,16 @@ class Invoice
       transaction.result == "success"
     end
   end
+
+  def charge(credit_data)
+    repository.sales_engine.transaction_repository.create_entry({
+      id: repository.sales_engine.transaction_repository.entries.last.id + 1,
+      invoice_id: id,
+      credit_card_number: credit_data[:credit_card_number],
+      credit_card_expiration_date: credit_data[:credit_card_expiration],
+      result: credit_data[:result],
+      created_at: Time.now.utc,
+      updated_at: Time.now.utc
+      })
+  end
 end

@@ -8,6 +8,10 @@ class TransactionRepository
       @sales_engine = parent
   end
 
+  def create_entry(entry)
+    entries.push(Transaction.new(entry, self))
+  end
+
   def create_entries(entries)
     entries.collect { |entry| Transaction.new(entry, self) }
   end

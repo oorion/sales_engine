@@ -20,7 +20,6 @@ class IntegrationTest < Minitest::Test
   end
 
   def test_it_can_find_the_merchant_with_the_most_revenue
-    skip
     assert_equal "Dicki-Bednar", production_sales_engine.merchant_repository.most_revenue(1).first.name
     assert_equal ["Dicki-Bednar", "Kassulke, O'Hara and Quitzon"], production_sales_engine.merchant_repository.most_revenue(2).map { |merchant| merchant.name }
   end
@@ -130,5 +129,11 @@ class IntegrationTest < Minitest::Test
 
   def test_invoice_knows_if_successful
     assert production_sales_engine.invoice_repository.entries.first.successful?
+  end
+
+  def test_invoice_can_charge
+    sales_engine.invoice_repository.entries.first.charge(credit_card_number: "4444333322221111",
+    credit_card_expiration: "10/13", result: "success")
+    assert_equal "4444333322221111", sales_engine.transaction_repository.entries.last.credit_card_number
   end
 end
