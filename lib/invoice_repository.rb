@@ -93,12 +93,12 @@ class InvoiceRepository
   end
 
   def create(data)
-    Invoice.new(data, self).tap do |invoice|
-      entries << formatted_invoice
-    end
+    entries << Invoice.new(formatted_invoice(data), self)
+    sales_engine.invoice_item_repository.create_invoice_item(data)
+    Invoice.new(formatted_invoice(data), self)
   end
 
   def formatted_invoice(data)
-    { data[:customer].id }
+    { id: entries.last.id + 1, customer_id: data[:customer].id, merchant_id: data[:merchant].id, status: data[:status], created_at: Time.now.utc, updated_at: Time.now.utc, customer: data[:customer], merchant: data[:merchant], items: data[:items]}
   end
 end

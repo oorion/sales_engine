@@ -86,4 +86,25 @@ class IntegrationTest < Minitest::Test
     assert sales_engine.invoice_repository.entries.last.created_at
     assert sales_engine.invoice_repository.entries.last.updated_at
   end
+
+  def test_it_creates_a_new_invoice_item
+    item1    = sales_engine.item_repository.entries[0]
+    item2    = sales_engine.item_repository.entries[1]
+    item3    = sales_engine.item_repository.entries[2]
+    invoice_items = sales_engine.invoice_item_repository.create_invoice_item({items: [item1, item2, item3]})
+    assert_equal 13, sales_engine.invoice_item_repository.entries.last.id
+  end
+
+  def test_it_creates_an_invoice_item
+    customer = sales_engine.customer_repository.entries[0]
+    merchant = sales_engine.merchant_repository.entries[0]
+    item1    = sales_engine.item_repository.entries[0]
+    item2    = sales_engine.item_repository.entries[1]
+    item3    = sales_engine.item_repository.entries[2]
+    invoice = sales_engine.invoice_repository.create({customer: customer,
+                                                      merchant: merchant,
+                                                      status: "shipped",
+                                                      items: [item1, item2, item3]})
+    assert_equal 3, sales_engine.invoice_item_repository.entries.last.item_id
+  end
 end

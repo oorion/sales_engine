@@ -7,8 +7,10 @@ class Invoice
               :updated_at,
               :repository,
               :customer,
-              :merchant
+              :merchant,
+              :items
 
+  # dependency inversion
   def initialize(data, parent)
     @id          = data[:id].to_i
     @customer_id = data[:customer_id].to_i
@@ -19,6 +21,7 @@ class Invoice
     @repository  = parent
     @customer    = data[:customer]
     @merchant    = data[:merchant]
+    @items       = data[:items]
   end
 
   def transactions
@@ -30,7 +33,7 @@ class Invoice
   end
 
   def items
-    repository.find_items(id)
+    @items ||= repository.find_items(id)
   end
 
   def customer
