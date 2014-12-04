@@ -28,4 +28,16 @@ class Item
   def merchant
     repository.find_merchant(merchant_id)
   end
+
+  def best_day
+    invoice_items.flat_map do |ii|
+      [Date.parse(ii.invoice.created_at)] * ii.quantity
+    end.group_by do |date|
+      date
+    end.map do |key, value|
+      [key, value.length]
+    end.max_by do |item|
+      item[1]
+    end[0]
+  end
 end

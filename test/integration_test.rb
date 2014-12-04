@@ -107,4 +107,28 @@ class IntegrationTest < Minitest::Test
                                                       items: [item1, item2, item3]})
     assert_equal 3, sales_engine.invoice_item_repository.entries.last.item_id
   end
+
+  def test_customer_can_get_transactions
+    assert_equal 7, production_sales_engine.customer_repository.entries.first.transactions.length
+  end
+
+  def test_customer_can_get_favorite_merchant
+    assert_equal 'Balistreri, Schaefer and Kshlerin', production_sales_engine.customer_repository.entries.first.favorite_merchant.name
+  end
+
+  def test_item_can_get_best_day
+    assert_equal Date.parse('2012-03-10'), production_sales_engine.item_repository.entries.first.best_day
+  end
+
+  def test_item_repository_can_determine_most_revenue
+    assert_equal 2, production_sales_engine.item_repository.most_revenue(2).length
+  end
+
+  def test_item_repository_can_determine_most_items_sold
+    assert_equal 1, production_sales_engine.item_repository.most_items(1).length
+  end
+
+  def test_invoice_knows_if_successful
+    assert production_sales_engine.invoice_repository.entries.first.successful?
+  end
 end

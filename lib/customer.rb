@@ -18,4 +18,24 @@ class Customer
   def invoices
     repository.find_invoices(id)
   end
+
+  def transactions
+    invoices.reduce([]) do |output, invoice|
+      output + invoice.transactions
+    end
+  end
+
+  def successful_transactions
+    transactions.select do |transaction|
+      transaction.result == "success"
+    end
+  end
+
+  def favorite_merchant
+    successful_merchants = successful_transactions.map do |transaction|
+      transaction.invoice.merchant
+    end
+    grouped_merchants = successful_merchants.group_by { |merchant| merchant }
+    grouped_merchants.max_by { |n| n[1].length }.first
+  end
 end

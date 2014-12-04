@@ -43,4 +43,10 @@ class Invoice
   def merchant
     @merchant ||= repository.find_merchant(merchant_id)
   end
+
+  def successful?
+    transactions.any? do |transaction|
+      transaction.result == "success"
+    end
+  end
 end
