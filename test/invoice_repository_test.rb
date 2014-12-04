@@ -106,11 +106,13 @@ class InvoiceRepositoryTest < Minitest::Test
   end
 
   def test_can_find_all_by_created_at
-    assert_equal 2, invoice_repository.find_all_by_created_at('2012-03-25 09:54:09 UTC').count
+    assert_equal 2,
+    invoice_repository.find_all_by_created_at('2012-03-25 09:54:09 UTC').count
   end
 
   def test_can_find_all_by_updated_at
-    assert_equal 2, invoice_repository.find_all_by_updated_at('2012-03-25 09:54:09 UTC').count
+    assert_equal 2,
+    invoice_repository.find_all_by_updated_at('2012-03-25 09:54:09 UTC').count
   end
 
   def test_it_delegates_transactions_to_sales_engine

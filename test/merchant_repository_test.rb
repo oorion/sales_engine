@@ -53,7 +53,8 @@ class MerchantRepositoryTest < Minitest::Test
   end
 
   def test_can_find_by_name
-    assert_equal 'Schroeder-Jerde', merchant_repository.find_by_name('Schroeder-Jerde').name
+    assert_equal 'Schroeder-Jerde',
+    merchant_repository.find_by_name('Schroeder-Jerde').name
   end
 
   def test_can_find_by_created_at
@@ -84,11 +85,13 @@ class MerchantRepositoryTest < Minitest::Test
   end
 
   def test_can_find_all_by_created_at
-    assert_equal 2, merchant_repository.find_all_by_created_at('2012-03-27 14:53:59 UTC').count
+    assert_equal 2,
+    merchant_repository.find_all_by_created_at('2012-03-27 14:53:59 UTC').count
   end
 
   def test_can_find_all_by_updated_at
-    assert_equal 2, merchant_repository.find_all_by_updated_at('2012-03-27 14:53:59 UTC').count
+    assert_equal 2,
+    merchant_repository.find_all_by_updated_at('2012-03-27 14:53:59 UTC').count
   end
 
   def test_it_can_delegate_invoices_to_sales_engine

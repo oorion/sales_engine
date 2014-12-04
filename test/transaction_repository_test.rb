@@ -74,15 +74,18 @@ class TransactionRepositoryTest < Minitest::Test
   end
 
   def test_can_find_by_result
-    assert_equal 'success', transaction_repository.find_by_result('success').result
+    assert_equal 'success',
+    transaction_repository.find_by_result('success').result
   end
 
   def test_can_find_by_created_at
-    assert_equal '2012-11-28', transaction_repository.find_by_created_at('2012-11-28').created_at
+    assert_equal '2012-11-28',
+    transaction_repository.find_by_created_at('2012-11-28').created_at
   end
 
   def test_can_find_by_updated_at
-    assert_equal '2014-10-25', transaction_repository.find_by_updated_at('2014-10-25').updated_at
+    assert_equal '2014-10-25',
+    transaction_repository.find_by_updated_at('2014-10-25').updated_at
   end
 
   def test_can_find_all_by_id

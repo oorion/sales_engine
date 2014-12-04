@@ -31,8 +31,12 @@ class ItemRepository
 
   def most_items(num)
     entries.each_with_object({}) do |item, hash|
-      successful_invoice_items = item.invoice_items.select { |ii| ii.successful? }
-      total_quantity = successful_invoice_items.reduce(0) {|sum, n| sum + n.quantity}
+      successful_invoice_items = item.invoice_items.select do |ii|
+        ii.successful?
+      end
+      total_quantity = successful_invoice_items.reduce(0) do |sum, n|
+        sum + n.quantity
+      end
       hash[item] = total_quantity
     end.sort_by { |key, val| val }.reverse.map { |n| n[0] }[0..num-1]
   end
