@@ -1,5 +1,8 @@
 require_relative 'test_helper'
 require_relative '../lib/invoice_repository'
+require_relative '../lib/customer'
+require_relative '../lib/merchant'
+require_relative '../lib/item'
 
 class InvoiceRepositoryTest < Minitest::Test
   attr_reader :invoice_repository, :sales_engine

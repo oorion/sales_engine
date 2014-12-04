@@ -1,7 +1,6 @@
 require_relative 'test_helper'
 require_relative '../lib/sales_engine'
 
-
 class IntegrationTest < Minitest::Test
   attr_reader :sales_engine, :production_sales_engine
 
@@ -21,7 +20,6 @@ class IntegrationTest < Minitest::Test
   end
 
   def test_it_can_find_the_merchant_with_the_most_revenue
-    skip
     assert_equal "Dicki-Bednar", production_sales_engine.merchant_repository.most_revenue(1).first.name
     assert_equal ["Dicki-Bednar", "Kassulke, O'Hara and Quitzon"], production_sales_engine.merchant_repository.most_revenue(2).map { |merchant| merchant.name }
   end
@@ -51,6 +49,64 @@ class IntegrationTest < Minitest::Test
     assert_equal BigDecimal.new('190836805') / 100, production_sales_engine.merchant_repository.revenue(Date.parse("2012-03-27 14:54:09 UTC"))
   end
 
+  def test_create_method_creates_a_new_invoice
+    customer = sales_engine.customer_repository.entries[0]
+    merchant = sales_engine.merchant_repository.entries[0]
+    item1    = sales_engine.item_repository.entries[0]
+    item2    = sales_engine.item_repository.entries[1]
+    item3    = sales_engine.item_repository.entries[2]
+    invoice = sales_engine.invoice_repository.create({customer: customer, merchant: merchant, status: "shipped", items: [item1, item2, item3]})
+    assert_equal customer, invoice.customer
+    assert_equal merchant, invoice.merchant
+    assert_equal "shipped", invoice.status
+  end
+
+  def test_entries_has_a_new_invoice
+    customer = sales_engine.customer_repository.entries[0]
+    merchant = sales_engine.merchant_repository.entries[0]
+    item1    = sales_engine.item_repository.entries[0]
+    item2    = sales_engine.item_repository.entries[1]
+    item3    = sales_engine.item_repository.entries[2]
+    invoice = sales_engine.invoice_repository.create({customer: customer, merchant: merchant, status: "shipped", items: [item1, item2, item3]})
+    assert_equal 1, sales_engine.invoice_repository.entries.last.customer.id
+  end
+
+  def test_the_invoice_format_is_correct
+    customer = sales_engine.customer_repository.entries[0]
+    merchant = sales_engine.merchant_repository.entries[0]
+    item1    = sales_engine.item_repository.entries[0]
+    item2    = sales_engine.item_repository.entries[1]
+    item3    = sales_engine.item_repository.entries[2]
+    invoice = sales_engine.invoice_repository.create({customer: customer, merchant: merchant, status: "shipped", items: [item1, item2, item3]})
+    assert_equal 11, sales_engine.invoice_repository.entries.last.id
+    assert_equal 1, sales_engine.invoice_repository.entries.last.customer_id
+    assert_equal 1, sales_engine.invoice_repository.entries.last.merchant_id
+    assert_equal "shipped", sales_engine.invoice_repository.entries.last.status
+    assert sales_engine.invoice_repository.entries.last.created_at
+    assert sales_engine.invoice_repository.entries.last.updated_at
+  end
+
+  def test_it_creates_a_new_invoice_item
+    item1    = sales_engine.item_repository.entries[0]
+    item2    = sales_engine.item_repository.entries[1]
+    item3    = sales_engine.item_repository.entries[2]
+    invoice_items = sales_engine.invoice_item_repository.create_invoice_item({items: [item1, item2, item3]})
+    assert_equal 13, sales_engine.invoice_item_repository.entries.last.id
+  end
+
+  def test_it_creates_an_invoice_item
+    customer = sales_engine.customer_repository.entries[0]
+    merchant = sales_engine.merchant_repository.entries[0]
+    item1    = sales_engine.item_repository.entries[0]
+    item2    = sales_engine.item_repository.entries[1]
+    item3    = sales_engine.item_repository.entries[2]
+    invoice = sales_engine.invoice_repository.create({customer: customer,
+                                                      merchant: merchant,
+                                                      status: "shipped",
+                                                      items: [item1, item2, item3]})
+    assert_equal 3, sales_engine.invoice_item_repository.entries.last.item_id
+  end
+
   def test_customer_can_get_transactions
     assert_equal 7, production_sales_engine.customer_repository.entries.first.transactions.length
   end
@@ -73,5 +129,11 @@ class IntegrationTest < Minitest::Test
 
   def test_invoice_knows_if_successful
     assert production_sales_engine.invoice_repository.entries.first.successful?
+  end
+
+  def test_invoice_can_charge
+    sales_engine.invoice_repository.entries.first.charge(credit_card_number: "4444333322221111",
+    credit_card_expiration: "10/13", result: "success")
+    assert_equal "4444333322221111", sales_engine.transaction_repository.entries.last.credit_card_number
   end
 end

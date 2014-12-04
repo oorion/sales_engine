@@ -5,8 +5,12 @@ class Invoice
               :status,
               :created_at,
               :updated_at,
-              :repository
+              :repository,
+              :customer,
+              :merchant,
+              :items
 
+  # dependency inversion
   def initialize(data, parent)
     @id          = data[:id].to_i
     @customer_id = data[:customer_id].to_i
@@ -15,6 +19,9 @@ class Invoice
     @created_at  = data[:created_at]
     @updated_at  = data[:updated_at]
     @repository  = parent
+    @customer    = data[:customer]
+    @merchant    = data[:merchant]
+    @items       = data[:items]
   end
 
   def transactions
@@ -26,20 +33,32 @@ class Invoice
   end
 
   def items
-    repository.find_items(id)
+    @items ||= repository.find_items(id)
   end
 
   def customer
-    repository.find_customer(customer_id)
+    @customer ||= repository.find_customer(customer_id)
   end
 
   def merchant
-    repository.find_merchant(merchant_id)
+    @merchant ||= repository.find_merchant(merchant_id)
   end
 
   def successful?
     transactions.any? do |transaction|
       transaction.result == "success"
     end
+  end
+
+  def charge(credit_data)
+    repository.sales_engine.transaction_repository.create_entry({
+      id: repository.sales_engine.transaction_repository.entries.last.id + 1,
+      invoice_id: id,
+      credit_card_number: credit_data[:credit_card_number],
+      credit_card_expiration_date: credit_data[:credit_card_expiration],
+      result: credit_data[:result],
+      created_at: Time.now.utc,
+      updated_at: Time.now.utc
+      })
   end
 end
