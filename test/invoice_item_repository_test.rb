@@ -73,15 +73,18 @@ class InvoiceItemRepositoryTest < Minitest::Test
   end
 
   def test_can_find_by_unit_price
-    assert_equal BigDecimal.new('13635') / 100, invoice_item_repository.find_by_unit_price(BigDecimal.new('13635') / 100).unit_price
+    assert_equal BigDecimal.new('13635') / 100,
+    invoice_item_repository.find_by_unit_price(BigDecimal.new('13635') / 100).unit_price
   end
 
   def test_can_find_by_created_at
-    assert_equal '2012-03-27 14:54:09 UTC', invoice_item_repository.find_by_created_at('2012-03-27 14:54:09 UTC').created_at
+    assert_equal '2012-03-27 14:54:09 UTC',
+    invoice_item_repository.find_by_created_at('2012-03-27 14:54:09 UTC').created_at
   end
 
   def test_can_find_by_updated_at
-    assert_equal '2012-03-27 14:54:09 UTC', invoice_item_repository.find_by_updated_at('2012-03-27 14:54:09 UTC').updated_at
+    assert_equal '2012-03-27 14:54:09 UTC',
+    invoice_item_repository.find_by_updated_at('2012-03-27 14:54:09 UTC').updated_at
   end
 
   def test_can_find_all_by_id
@@ -105,15 +108,18 @@ class InvoiceItemRepositoryTest < Minitest::Test
   end
 
   def test_can_find_all_by_unit_price
-    assert_equal 2, invoice_item_repository.find_all_by_unit_price(BigDecimal.new('13635') / 100).count
+    assert_equal 2,
+    invoice_item_repository.find_all_by_unit_price(BigDecimal.new('13635') / 100).count
   end
 
   def test_can_find_all_by_created_at
-    assert_equal 2, invoice_item_repository.find_all_by_created_at('2012-03-27 14:54:09 UTC').count
+    assert_equal 2,
+    invoice_item_repository.find_all_by_created_at('2012-03-27 14:54:09 UTC').count
   end
 
   def test_can_find_all_by_updated_at
-    assert_equal 2, invoice_item_repository.find_all_by_updated_at('2012-03-27 14:54:09 UTC').count
+    assert_equal 2,
+    invoice_item_repository.find_all_by_updated_at('2012-03-27 14:54:09 UTC').count
   end
 
   def test_delegates_find_invoice_to_sales_engine

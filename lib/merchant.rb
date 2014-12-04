@@ -38,25 +38,24 @@ class Merchant
 
   def successful_invoices
     invoices.select do |invoice|
-      invoice.transactions.any? do |transaction|
-        transaction.result == "success"
-      end
+      invoice.successful?
     end
   end
 
   def unsuccessful_invoices
     invoices.select do |invoice|
-      invoice.transactions.none? do |transaction|
-        transaction.result == "success"
-      end
+      !invoice.successful?
+    end
+  end
+
+  def grouped_customers
+    successful_invoices.group_by do |invoice|
+      invoice.customer_id
     end
   end
 
   def favorite_customer
-    grouped_customers = successful_invoices.group_by do |invoice|
-      invoice.customer_id
-    end
-    favorite_customer_id = grouped_customers.max_by do |customer|
+    grouped_customers.max_by do |customer|
       customer[1].length
     end.last.first.customer
   end

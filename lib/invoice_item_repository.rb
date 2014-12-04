@@ -95,34 +95,26 @@ class InvoiceItemRepository
     end
   end
 
-  # def formatted_invoice_item(data)
-  # end
+  def quantity_of_items(data)
+    grouped_items = data[:items].group_by { |item| item }
+    converted_grouped_items = grouped_items.map { |key, val| [key, val.length] }
+    converted_grouped_items.each_with_object({}) { |n, hash| hash[n[0]] = n[1] }
+  end
 
-  # def item_quantity(data)
-  #   data[:items].group_by { |item| item }
-  # end
+  def format_for_invoice_item(data, item)
+    { id: entries.last.id + 1,
+      item_id: item.id,
+      invoice_id: sales_engine.invoice_repository.entries.last.id,
+      quantity: quantity_of_items(data)[item],
+      unit_price: item.unit_price,
+      created_at: Time.now.utc,
+      updated_at: Time.now.utc
+    }
+  end
 
   def create_invoice_item(data)
-    quantity_of_items = data[:items].group_by do |item|
-      item
-    end.map do |key, val|
-      [key, val.length]
-    end.each_with_object({}) do |n, hash|
-      hash[n[0]] = n[1]
-    end
-
     data[:items].uniq.each do |item|
-      formatted_data = {
-        id: entries.last.id + 1,
-        item_id: item.id,
-        invoice_id: sales_engine.invoice_repository.entries.last.id,
-        quantity: quantity_of_items[item],
-        unit_price: item.unit_price,
-        created_at: Time.now.utc,
-        updated_at: Time.now.utc }
-      entries << InvoiceItem.new(formatted_data, self)
-    # formatted_invoice_item(data).each do |ii|
-    #   entries << ii
+      entries << InvoiceItem.new(format_for_invoice_item(data, item), self)
     end
   end
 

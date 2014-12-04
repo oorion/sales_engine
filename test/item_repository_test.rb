@@ -114,7 +114,8 @@ class ItemRepositoryTest < Minitest::Test
   end
 
   def test_can_find_all_by_unit_price
-    assert_equal 2, item_repository.find_all_by_unit_price(BigDecimal.new('751.07')).count
+    assert_equal 2,
+    item_repository.find_all_by_unit_price(BigDecimal.new('751.07')).count
   end
 
   def test_can_find_all_by_merchant_id
@@ -122,11 +123,13 @@ class ItemRepositoryTest < Minitest::Test
   end
 
   def test_can_find_all_by_created_at
-    assert_equal 2, item_repository.find_all_by_created_at('2012-03-27 14:53:59 UTC').count
+    assert_equal 2,
+    item_repository.find_all_by_created_at('2012-03-27 14:53:59 UTC').count
   end
 
   def test_can_find_all_by_updated_at
-    assert_equal 2, item_repository.find_all_by_updated_at('2012-03-27 14:53:59 UTC').count
+    assert_equal 2,
+    item_repository.find_all_by_updated_at('2012-03-27 14:53:59 UTC').count
   end
 
   def test_it_delegates_find_invoice_items_to_sales_engine
